@@ -16,7 +16,7 @@ h1{font-size:clamp(2.2rem,6vw,4.9rem);line-height:1.08;letter-spacing:-.04em;mar
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0 33px}.stat{background:#ffffff0a;border:1px solid #ffffff29;padding:19px;border-radius:16px}.stat strong{display:block;font-size:2rem}.stat small{color:#bdd0df}
 .panel{background:#10263ace;border:1px solid #ffffff29;border-radius:20px;padding:20px}.artist .panel{background:#33233dbb}
 .panel h2{margin-top:0}.tabs{display:flex;gap:8px;flex-wrap:wrap}.tabs button,.filters select,.filters input{border:1px solid #70859b;color:white;background:#182c42;border-radius:11px;padding:12px 13px;min-height:48px}.tabs button{cursor:pointer}.tabs button[aria-pressed=true]{background:#ffd685;color:#122032;border-color:#ffd685;font-weight:800}.filters{display:flex;gap:10px;margin:16px 0;flex-wrap:wrap}.filters input{flex:2;min-width:200px}.filters select{flex:1;min-width:185px}
-#results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));gap:13px;margin-top:16px}.card{border:1px solid #ffffff37;border-radius:15px;background:#ffffff0b;padding:17px;display:flex;flex-direction:column;gap:10px;min-width:0}.card h3{margin:0;font-size:1.07rem;overflow-wrap:anywhere}.hint{font-size:.8rem;color:#bbcbda;line-height:1.4;overflow-wrap:anywhere}.tag{font-size:.72rem;color:#ffe3a6;border:1px solid #ffffff3e;padding:5px 9px;border-radius:100px;align-self:flex-start}.card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}.card-actions a,.card-actions button{background:#31445a;border:1px solid #ffffff3d;color:#fff;text-decoration:none;border-radius:9px;padding:9px 11px;font-size:.82rem;cursor:pointer}.card-actions a:hover,.card-actions button:hover{background:#425d7a}
+#results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));gap:13px;margin-top:16px}#spotlight-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));gap:13px;margin-top:16px}.card{border:1px solid #ffffff37;border-radius:15px;background:#ffffff0b;padding:17px;display:flex;flex-direction:column;gap:10px;min-width:0}.card h3{margin:0;font-size:1.07rem;overflow-wrap:anywhere}.hint{font-size:.8rem;color:#bbcbda;line-height:1.4;overflow-wrap:anywhere}.tag{font-size:.72rem;color:#ffe3a6;border:1px solid #ffffff3e;padding:5px 9px;border-radius:100px;align-self:flex-start}.card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}.card-actions a,.card-actions button{background:#31445a;border:1px solid #ffffff3d;color:#fff;text-decoration:none;border-radius:9px;padding:9px 11px;font-size:.82rem;cursor:pointer}.card-actions a:hover,.card-actions button:hover{background:#425d7a}
 .info{color:#bbcbda;line-height:1.6}.status{font-size:.84rem;color:#bbcddd;margin-top:14px}.spotlight{border-top:1px solid #ffffff40;margin-top:38px;padding-top:25px}
 footer{border-top:1px solid #ffffff38;padding-block:28px;color:#b5c3d2;font-size:.82rem;line-height:1.65}
 @media(max-width:650px){main{padding-top:30px}.stats{gap:7px}.stat{padding:11px}.stat strong{font-size:1.65rem}.stat small{font-size:.74rem}.panel{padding:13px}.filters input,.filters select{width:100%}}
@@ -63,13 +63,23 @@ if(state.view==="releases"&&!x.matched)anchor(acts,t.artist,DATA.artists);
 if(state.view==="songs"||state.view==="streaming"){if(x.spotify)anchor(acts,t.open,x.spotify);else acts.append(text("span","hint",t.none));}
 card.append(acts);$("results").append(card);}
 updateUrl();}
+function renderSpotlight(){const t=TXT[state.lang];const out=$("spotlight-items");out.replaceChildren();
+if(document.body.classList.contains("artist")) {
+ const early=DATA.streamingOnly.filter(x=>["Piel De Oveja Alma De Fiera","Soy Mi Propio Traidor"].includes(x.title));
+ if(early.length!==2)throw Error("Early public Spotify identities must be owner-matched");
+ for(const x of early){const card=text("article","card","");card.append(text("span","tag",t.spotify));card.append(text("h3","",x.title));const actions=text("div","card-actions","");anchor(actions,t.open,x.spotify);card.append(actions);out.append(card);}
+}else{
+ const matched=DATA.releases.filter(x=>x.matched);
+ if(matched.length!==7)throw Error("Exactly seven UPC/ISRC-matched album tracklists expected");
+ for(const x of matched){const card=text("article","card","");card.append(text("span","tag",t.verified));card.append(text("h3","",x.title));card.append(text("p","hint",x.trackCount+" "+t.tracks+" · UPC "+x.upc));const actions=text("div","card-actions","");const b=text("button","",t.matchedButton);b.type="button";b.addEventListener("click",()=>{state.view="songs";state.q=x.title;$("query").value=state.q;drawTabs();draw();$("catalog").scrollIntoView({block:"start"});});actions.append(b);card.append(actions);out.append(card);}
+}}
 function drawTabs(){for(const v of ["releases","songs","streaming"])$("view-"+v).setAttribute("aria-pressed",String(state.view===v));}
 function language(){const t=TXT[state.lang];document.documentElement.lang=state.lang;$("hero").textContent=t.hero;$("lead").textContent=t.lead;
 for(const [id,key] of [["browse","browse"],["listen","listen"],["shop","shop"],["count-r","cr"],["count-s","cs"],["count-l","cl"],["section-title","section"],["view-releases","rt"],["view-songs","st"],["view-streaming","ot"],["spotlight-title","spotTitle"],["spotlight-desc","spotDesc"],["warning","warning"],["footer-text","footer"]])$(id).textContent=t[key];
 $("query").placeholder=t.q;for(const [i,label] of [t.all,t.matched,t.pending].entries())$("verification").options[i].textContent=label;$("genre").options[0].textContent=t.genre;
 for(const l of ["en","es"])$("lang-"+l).setAttribute("aria-pressed",String(l===state.lang));
 $("sibling").href="label.html?lang="+state.lang;
-draw();}
+renderSpotlight();draw();}
 for(const g of [...new Set(DATA.songs.map(s=>s.genre).filter(Boolean))].sort()){const o=text("option","",g);o.value=g;$("genre").append(o);}
 if(new URLSearchParams(location.search).get("genre")&&[...$("genre").options].some(o=>o.value===new URLSearchParams(location.search).get("genre")))state.genre=new URLSearchParams(location.search).get("genre");
 $("query").value=state.q;$("genre").value=state.genre;
