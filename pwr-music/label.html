@@ -46,8 +46,8 @@ const TXT={
 const $=id=>document.getElementById(id);
 const state={lang:new URLSearchParams(location.search).get("lang")==="es"?"es":"en",view:["releases","songs","streaming"].includes(new URLSearchParams(location.search).get("view"))?new URLSearchParams(location.search).get("view"):"releases",q:new URLSearchParams(location.search).get("q")||"",genre:"all",verification:"all"};
 const text=(tag,cls,value)=>{const n=document.createElement(tag);if(cls)n.className=cls;n.textContent=String(value);return n;};
-const fold=s=>String(s||"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase();
-function anchor(parent,label,url){if(!/^https:\\/\\/open\\.spotify\\.com\\/(?:track|album|artist)\\/[A-Za-z0-9]{22}$/.test(url||""))return;const a=text("a","",label);a.href=url;a.target="_blank";a.rel="noopener noreferrer";parent.append(a);}
+const fold=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+function anchor(parent,label,url){if(!/^https:\/\/open\.spotify\.com\/(?:track|album|artist)\/[A-Za-z0-9]{22}$/.test(url||""))return;const a=text("a","",label);a.href=url;a.target="_blank";a.rel="noopener noreferrer";parent.append(a);}
 function updateUrl(){const q=new URLSearchParams();if(state.lang==="es")q.set("lang","es");if(state.view!=="releases")q.set("view",state.view);if(state.q)q.set("q",state.q);if(state.genre!=="all")q.set("genre",state.genre);history.replaceState(null,"",location.pathname+(q.size?"?"+q:""));}
 function draw(){const t=TXT[state.lang];const data=state.view==="releases"?DATA.releases:state.view==="songs"?DATA.songs:DATA.streamingOnly;const q=fold(state.q);
 const all=data.filter(x=>{if(state.view==="releases"&&state.verification!=="all"&&(!!x.matched)!==(state.verification==="matched"))return false;
