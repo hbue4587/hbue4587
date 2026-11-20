@@ -1,5 +1,7 @@
 # Browse released PWR Music · Explorar música publicada
 
+**Interactive browser preview (experimental) / Vista interactiva (experimental):** [Open the searchable EN/ES HTML preview](https://raw.githack.com/hbue4587/hbue4587/main/pwr-music/preview.html) · [GitHub source/fallback](https://github.com/hbue4587/hbue4587/blob/main/pwr-music/preview.html). The browser preview is served via an independent free file proxy, which may show a one-time safety notice and is not guaranteed to be reachable. The complete text directory below works directly in public GitHub without that service. This is **not** a deployment to PWRMusic.net or hmiguel.com.
+
 > **Public, read-only catalog preview — November 20, 2026.** This GitHub-rendered public directory is a preview of owner-approved, already released music metadata (not a streaming host). **It is not a public website deployment, music download, or replacement for the existing WordPress stores.** / **Catálogo de lectura; no sustituye las tiendas ni constituye un despliegue público.**
 
 **[All 203 UPC releases / 203 lanzamientos](#all-203-distributor-listed-releases--203-lanzamientos)** · **[7 matched tracklists / 7 listas cotejadas](#seven-upcisrc-matched-albums--siete-álbumes-cotejados)** · **[Other Spotify listening links / otros enlaces](#additional-confirmed-recording--grabación-adicional-confirmada)** · **[Spotify-only / solo Spotify](#spotify-only-recordings--canciones-solo-en-spotify)**
