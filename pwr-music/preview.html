@@ -71,7 +71,7 @@ for(const x of items){
  const controls=add(card,make("div","actions"));
  if(tab==="releases"){if(x.matched){const btn=make("button","",t.find);btn.type="button";btn.addEventListener("click",()=>{tab="songs";el("q").value=x.title;el("genre").value="all";el("q").value="";el("q").value=D.songs.find(y=>y.upc===x.upc)?.album||x.title;drawTabs();draw();el("items").scrollIntoView({behavior:"smooth",block:"start"})});add(controls,btn)}else{link(controls,t.artist,D.artists);add(card,make("div","detail",t.warn));}}
  else link(controls,t.spotify,x.spotify);
- if(tab==="songs"&&!x.spotify)add(card,make("div","detail",lang==="es"?"Sin enlace individual verificado":"No exact Spotify song link verified"));
+ if(tab==="songs"&&!x.spotify){add(card,make("div","detail",lang==="es"?"Sin enlace individual verificado":"No exact Spotify song link verified"));const search="https://open.spotify.com/search/"+encodeURIComponent("Henry Miguel "+x.title);link(controls,lang==="es"?"Buscar esta canción en Spotify (sin verificar)":"Find this song on Spotify (unverified)",search);}
 }
 }
 function drawTabs(){for(const b of document.querySelectorAll("[data-tab]")){b.classList.toggle("active",b.dataset.tab===tab);b.setAttribute("aria-selected",b.dataset.tab===tab?"true":"false");}}
