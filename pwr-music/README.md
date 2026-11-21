@@ -1,5 +1,7 @@
 # Browse released PWR Music · Explorar música publicada
 
+**NEW — public bilingual launch hub / Nueva portada pública bilingüe:** [Open PWR Music + Henry Miguel](https://htmlpreview.github.io/?https://github.com/hbue4587/hbue4587/blob/main/pwr-music/index.html) · [View the verified HTML source](https://github.com/hbue4587/hbue4587/blob/main/pwr-music/index.html). This brings the two distinct published-music previews together without requiring GitHub login. It is still a third-party HTML rendering service, not deployment of the complete Astro websites. GitHub Pages hosting is not enabled; the [ready-to-deploy read-only workflow](https://github.com/hbue4587/hbue4587/actions/workflows/pwr-public-preview-pages.yml) produces a safe download artifact meanwhile. / Une ambas vistas sin alterar las tiendas de WordPress.
+
 **New · Álbum completo:** The UPC-matched **VIBRA CONTIGO** album (`7333591432527`) now offers an owner-maintained [official Spotify album link](https://open.spotify.com/album/7uk3bYCQsqvMGLY1CND1oT) plus click-to-load album listening in both bilingual previews. / **VIBRA CONTIGO** ahora tiene enlace de álbum cotejado y reproductor integrado en ambas vistas. This confirms a catalog match, not an independent live Spotify availability check. No audio is hosted by these previews.
 
 ## Choose a public preview · Elige una vista pública
