@@ -35,15 +35,18 @@ jobs:
           test -s pwr-music/henry-miguel.html
           test -s pwr-music/preview.html
           test -s pwr-music/radio.html
+          test -s pwr-music/press.html
           test -s pwr-music/singles.html
           test "$(grep -c 'class="single"' pwr-music/singles.html)" -eq 34
+          grep -q 'noindex,nofollow,noarchive' pwr-music/press.html
+          grep -q 'Print / Save PDF' pwr-music/press.html
           grep -q 'noindex,nofollow,noarchive' pwr-music/radio.html
           grep -q '71</strong> exact Spotify recordings' pwr-music/radio.html
           grep -q 'noindex,nofollow,noarchive' pwr-music/singles.html
           grep -q 'noindex,nofollow,noarchive' pwr-music/index.html
           grep -q 'noindex,nofollow,noarchive' pwr-music/label.html
           grep -q 'noindex,nofollow,noarchive' pwr-music/henry-miguel.html
-          if grep -Ein 'https://(drive.google.com|docs.google.com)|artist.amuse.io|\.mp3|\.wav' pwr-music/{index,label,henry-miguel,preview,singles,radio}.html; then
+          if grep -Ein 'https://(drive.google.com|docs.google.com)|artist.amuse.io|\.mp3|\.wav' pwr-music/{index,label,henry-miguel,preview,singles,radio,press}.html; then
             echo 'Unexpected private audio/admin link or audio filename in public preview'
             exit 1
           fi
