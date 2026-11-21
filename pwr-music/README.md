@@ -1,5 +1,7 @@
 # Browse released PWR Music · Explorar música publicada
 
+**New · Álbum completo:** The UPC-matched **VIBRA CONTIGO** album (`7333591432527`) now offers an owner-maintained [official Spotify album link](https://open.spotify.com/album/7uk3bYCQsqvMGLY1CND1oT) plus click-to-load album listening in both bilingual previews. / **VIBRA CONTIGO** ahora tiene enlace de álbum cotejado y reproductor integrado en ambas vistas. This confirms a catalog match, not an independent live Spotify availability check. No audio is hosted by these previews.
+
 ## Choose a public preview · Elige una vista pública
 
 **PWR Music — label / sello:** [Open the bilingual music catalog](https://htmlpreview.github.io/?https://github.com/hbue4587/hbue4587/blob/main/pwr-music/label.html) · [View public source on GitHub](https://github.com/hbue4587/hbue4587/blob/main/pwr-music/label.html)
