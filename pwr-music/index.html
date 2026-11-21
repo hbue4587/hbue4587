@@ -75,6 +75,7 @@ footer{font-size:.9rem;color:#c6d5e2}footer a{color:#bce5ff}
 <article><h2>PWR Music</h2><p>Label and released-music catalog. Albums, songs, verified tracklists, genre discovery and official listening links.</p><p lang="es">Sello y catálogo publicado: álbumes, canciones, géneros y enlaces de escucha.</p><a href="./label.html" data-preview-page="label.html">Explore PWR Music / Explorar</a></article>
 <article><h2>Henry Miguel</h2><p>Artist-focused preview: the performer, early recordings and Spotify music discovery.</p><p lang="es">Vista del artista, sus primeras grabaciones y música publicada.</p><a href="./henry-miguel.html" data-preview-page="henry-miguel.html">Meet Henry Miguel / Conócelo</a></article>
 <article><h2>Seven verified albums</h2><p>Browse all 80 ISRC-matched recordings with real track order, 70 official Spotify links and an in-page player.</p><p lang="es">Siete álbumes y 80 canciones cotejadas, con 70 enlaces oficiales y un reproductor opcional.</p><a href="./albums.html" data-preview-page="albums.html">Open 7 albums / Ver 7 álbumes</a></article>
+<article><h2>34 published singles / 34 sencillos</h2><p>Search 34 UPC-verified one-track releases. Find original release titles and clearly labeled unverified Spotify searches.</p><p lang="es">Busca 34 sencillos publicados con UPC y enlaces a búsquedas de Spotify sin verificar.</p><a href="./singles.html" data-preview-page="singles.html">Explore singles / Ver sencillos</a></article>
 <article><h2>Complete discovery</h2><p>Combined searchable directory for offline-friendly music metadata review.</p><p lang="es">Directorio completo para buscar y revisar los lanzamientos publicados.</p><a href="./preview.html" data-preview-page="preview.html">Full catalog / Catálogo completo</a></article>
 </div>
 <p class="notice" role="note"><strong>Preview only / Solo vista previa.</strong> This is not a migration or replacement for the current websites. Existing WordPress pages, WooCommerce purchases, accounts, customer downloads and legacy URLs remain active. No unreleased drafts, private Drive audio or unlicensed full masters are hosted here.</p>
@@ -84,7 +85,7 @@ footer{font-size:.9rem;color:#c6d5e2}footer a{color:#bce5ff}
    renderer. Relative URLs remain intact for local files and future Pages. */
 (() => {
   const previewRoot = 'https://htmlpreview.github.io/?https://github.com/hbue4587/hbue4587/blob/main/pwr-music/';
-  const allowed = new Set(['label.html', 'henry-miguel.html', 'preview.html', 'albums.html']);
+  const allowed = new Set(['label.html', 'henry-miguel.html', 'preview.html', 'albums.html', 'singles.html']);
   for (const link of document.querySelectorAll('a[data-preview-page]')) {
     const target = link.getAttribute('data-preview-page');
     if (allowed.has(target) && location.hostname === 'htmlpreview.github.io') link.href = previewRoot + target;
