@@ -1,0 +1,58 @@
+name: Public PWR Music preview (no production changes)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'pwr-music/**'
+      - '.github/workflows/pwr-public-preview-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pwr-music-public-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy already-public HTML previews to GitHub Pages
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify metadata-only preview inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s pwr-music/index.html
+          test -s pwr-music/label.html
+          test -s pwr-music/henry-miguel.html
+          test -s pwr-music/preview.html
+          grep -q 'noindex,nofollow,noarchive' pwr-music/index.html
+          grep -q 'noindex,nofollow,noarchive' pwr-music/label.html
+          grep -q 'noindex,nofollow,noarchive' pwr-music/henry-miguel.html
+          if grep -Ein 'https://(drive.google.com|docs.google.com)|artist.amuse.io|\.mp3|\.wav' pwr-music/{index,label,henry-miguel,preview}.html; then
+            echo 'Unexpected private audio/admin link or audio filename in public preview'
+            exit 1
+          fi
+          echo 'Only public HTML metadata with noindex was staged'
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload public preview artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: pwr-music
+      - name: Deploy public preview
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Record published preview
+        if: success()
+        run: |
+          echo "PWR Music + Henry Miguel public preview: ${{ steps.deployment.outputs.page_url }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "This does not change pwrmusic.net, hmiguel.com or any WordPress/WooCommerce store." >> "$GITHUB_STEP_SUMMARY"
