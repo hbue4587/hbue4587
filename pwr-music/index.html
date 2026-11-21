@@ -80,6 +80,7 @@ footer{font-size:.9rem;color:#c6d5e2}footer a{color:#bce5ff}
 <article><h2>PWR Radio / Radio PWR</h2><p>Explore 71 individually verified Spotify recordings with a genre-aware queue, next/previous controls, shuffle, and official embedded listening.</p><p lang="es">Escucha 71 canciones verificadas por ISRC con géneros, orden de reproducción y selección aleatoria en Spotify.</p><a href="./radio.html" data-preview-page="radio.html">Play PWR Radio / Escuchar Radio PWR</a></article>
 <article><h2>Verified song credits / Créditos verificados</h2><p>Discover the Amuse production and vocal credits for 80 published ISRC/UPC-matched tracks, with 70 exact Spotify listening links.</p><p lang="es">Consulta 159 créditos de producción y voz para 80 canciones, con 70 enlaces a Spotify.</p><a href="./credits.html" data-preview-page="credits.html">Explore verified credits / Ver créditos</a></article>
 <article><h2>Henry Miguel press kit / Kit de prensa</h2><p>Print a bilingual artist fact sheet with seven UPC/ISRC-matched albums, official Spotify listening links and publication scope.</p><p lang="es">Ficha bilingüe lista para imprimir, con siete álbumes cotejados, enlaces oficiales y fuentes verificadas.</p><a href="./press.html" data-preview-page="press.html">Open press kit / Abrir kit de prensa</a></article>
+<article><h2>Printable discography / Discografía PDF</h2><p>All 203 distributor-reported released UPCs in one searchable, print-ready directory. Seven album tracklists are fully matched; the other 196 are labeled metadata-only.</p><p lang="es">Los 203 lanzamientos en un directorio para buscar, imprimir o guardar como PDF. No se inventan pistas ni enlaces.</p><a href="./discography.html" data-preview-page="discography.html">Print 203 releases / Imprimir</a></article>
 <article><h2>Complete discovery</h2><p>Combined searchable directory for offline-friendly music metadata review.</p><p lang="es">Directorio completo para buscar y revisar los lanzamientos publicados.</p><a href="./preview.html" data-preview-page="preview.html">Full catalog / Catálogo completo</a></article>
 </div>
 <p class="notice" role="note"><strong>Preview only / Solo vista previa.</strong> This is not a migration or replacement for the current websites. Existing WordPress pages, WooCommerce purchases, accounts, customer downloads and legacy URLs remain active. No unreleased drafts, private Drive audio or unlicensed full masters are hosted here.</p>
@@ -89,7 +90,7 @@ footer{font-size:.9rem;color:#c6d5e2}footer a{color:#bce5ff}
    renderer. Relative URLs remain intact for local files and future Pages. */
 (() => {
   const previewRoot = 'https://htmlpreview.github.io/?https://github.com/hbue4587/hbue4587/blob/main/pwr-music/';
-  const allowed = new Set(['label.html', 'henry-miguel.html', 'preview.html', 'albums.html', 'singles.html', 'genres.html', 'radio.html', 'press.html', 'credits.html']);
+  const allowed = new Set(['label.html', 'henry-miguel.html', 'preview.html', 'albums.html', 'singles.html', 'genres.html', 'radio.html', 'press.html', 'credits.html', 'discography.html']);
   for (const link of document.querySelectorAll('a[data-preview-page]')) {
     const target = link.getAttribute('data-preview-page');
     if (allowed.has(target) && location.hostname === 'htmlpreview.github.io') link.href = previewRoot + target;
