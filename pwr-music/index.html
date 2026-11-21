@@ -28,6 +28,23 @@ footer{font-size:.9rem;color:#c6d5e2}footer a{color:#bce5ff}
 .search-buttons button:hover{filter:brightness(1.1)}
 .search-footnote{font-size:.9rem}
 @media(max-width:520px){.search-buttons{flex-direction:column}.search-buttons button{width:100%}}
+
+.listen-now{margin:30px 0 12px;padding:24px;border:1px solid #91a3b75e;border-radius:18px;background:linear-gradient(140deg,#18324a,#101d2a)}
+.listen-now h2{margin:0 0 7px}.listen-now>.details{color:#c8d7e3;margin:0 0 18px}
+.listen-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}
+.listen-tile{border:1px solid #91a3b75e;border-radius:14px;padding:17px;background:#ffffff0b}
+.listen-tile h3{font-size:1.08rem;margin:0 0 8px}
+.listen-tile p{margin:4px 0;color:#c8d7e3;font-size:.91rem}
+.listen-tile code{color:#f8dcab;font-size:.82rem}
+.listen-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.listen-actions button{border:0;border-radius:9px;background:#f9d685;color:#192333;min-height:44px;padding:10px 13px;font:inherit;font-weight:800;cursor:pointer}
+.listen-actions button[aria-expanded="true"]{background:#fff1bc;outline:2px solid white}
+.listen-actions a{color:#bce5ff;text-underline-offset:3px;font-weight:700}
+.listen-now button:focus-visible,.listen-now a:focus-visible{outline:3px solid #f9d685;outline-offset:3px}
+#spotify-listener{margin-top:18px;padding:13px;border-radius:12px;background:#091622}
+#spotify-listener iframe{border:0;width:100%;height:152px;border-radius:10px}
+#spotify-listener p{margin:0 0 10px;color:#c8d7e3}
+#spotify-listener[hidden]{display:none}
 </style></head><body><main>
 <p class="eyebrow">PWR Music International · Public preview / Vista pública</p>
 <h1>Music without borders.<br><span lang="es">Música sin fronteras.</span></h1>
@@ -41,6 +58,18 @@ footer{font-size:.9rem;color:#c6d5e2}footer a{color:#bce5ff}
 <div class="search-buttons"><button type="submit" data-preview-page="label.html">Search releases / Buscar lanzamientos</button><button type="submit" data-preview-page="henry-miguel.html" formaction="./henry-miguel.html">Search songs / Buscar canciones</button></div>
 </form>
 <p class="search-footnote">Owner-confirmed released metadata only; no private archive search. / Solo metadatos publicados, sin archivos privados.</p>
+</section>
+
+<section class="listen-now" aria-labelledby="listen-heading">
+<h2 id="listen-heading">Listen to released music / Escucha música publicada</h2>
+<p class="details">Three distributor/ISRC-matched tracks with official Spotify links. In-page playback is provided by Spotify, not hosted audio. / Tres canciones cotejadas por ISRC; el reproductor es de Spotify.</p>
+<div class="listen-grid">
+<div class="listen-tile"><h3>BACHATA PEGAJOSA</h3><p>Bachata / Salsa y Tropical · BACHATA PEGAJOSA</p><p><code>ISRC SE6132686788</code></p><div class="listen-actions"><button type="button" aria-expanded="false" aria-controls="spotify-listener" data-play-spotify="3lldt2XbS8JSn7lJoifLEs" data-song="BACHATA PEGAJOSA">Play here / Reproducir aquí</button><a href="https://open.spotify.com/track/3lldt2XbS8JSn7lJoifLEs" target="_blank" rel="noopener noreferrer">Spotify <span aria-hidden="true">↗</span></a></div></div>
+<div class="listen-tile"><h3>CUMBIA CON FLOW</h3><p>Cumbia / Salsa y Tropical · CUMBIA CON FLOW</p><p><code>ISRC SE6132686742</code></p><div class="listen-actions"><button type="button" aria-expanded="false" aria-controls="spotify-listener" data-play-spotify="2Aw0QyBphFmHBBBu4o76gF" data-song="CUMBIA CON FLOW">Play here / Reproducir aquí</button><a href="https://open.spotify.com/track/2Aw0QyBphFmHBBBu4o76gF" target="_blank" rel="noopener noreferrer">Spotify <span aria-hidden="true">↗</span></a></div></div>
+<div class="listen-tile"><h3>DESPACIO Y CON AMOR</h3><p>Reggaetón / Hip-Hop · VIBRA CONTIGO</p><p><code>ISRC SE6132640498</code></p><div class="listen-actions"><button type="button" aria-expanded="false" aria-controls="spotify-listener" data-play-spotify="3uKQe6AidQiLyQiwrFtE4t" data-song="DESPACIO Y CON AMOR">Play here / Reproducir aquí</button><a href="https://open.spotify.com/track/3uKQe6AidQiLyQiwrFtE4t" target="_blank" rel="noopener noreferrer">Spotify <span aria-hidden="true">↗</span></a></div></div>
+</div>
+<div id="spotify-listener" role="region" aria-label="Spotify listening player / Reproductor de Spotify" hidden></div>
+<p class="search-footnote">Spotify availability and playback limitations vary by country and account. / La disponibilidad y reproducción dependen del país y la cuenta.</p>
 </section>
 <div class="grid">
 <article><h2>PWR Music</h2><p>Label and released-music catalog. Albums, songs, verified tracklists, genre discovery and official listening links.</p><p lang="es">Sello y catálogo publicado: álbumes, canciones, géneros y enlaces de escucha.</p><a href="./label.html" data-preview-page="label.html">Explore PWR Music / Explorar</a></article>
@@ -74,5 +103,32 @@ footer{font-size:.9rem;color:#c6d5e2}footer a{color:#bce5ff}
     if (!query) return;
     location.assign(quickSearchUrl(event.submitter?.getAttribute('data-preview-page'), query));
   });
+
+  // A single lazy-loaded official player; never serve or upload master audio.
+  const listener = document.getElementById('spotify-listener');
+  const playButtons = [...document.querySelectorAll('[data-play-spotify]')];
+  let activeSpotify = '';
+  for (const button of playButtons) {
+    button.addEventListener('click', () => {
+      const id = button.getAttribute('data-play-spotify') || '';
+      if (!/^[A-Za-z0-9]{22}$/.test(id)) return;
+      const opening = activeSpotify !== id;
+      activeSpotify = opening ? id : '';
+      listener.replaceChildren();
+      listener.hidden = !opening;
+      for (const peer of playButtons) peer.setAttribute('aria-expanded', String(opening && peer === button));
+      if (!opening) return;
+      const caption = document.createElement('p');
+      caption.textContent = button.getAttribute('data-song') + ' · Spotify';
+      const iframe = document.createElement('iframe');
+      iframe.title = 'Spotify: ' + button.getAttribute('data-song');
+      iframe.src = 'https://open.spotify.com/embed/track/' + id;
+      iframe.loading = 'lazy';
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+      iframe.setAttribute('allowfullscreen', '');
+      listener.append(caption, iframe);
+    });
+  }
 })();
 </script></body></html>
