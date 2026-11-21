@@ -42,17 +42,49 @@ jobs:
             exit 1
           fi
           echo 'Only public HTML metadata with noindex was staged'
+      - name: Check whether this repository has Pages enabled (read-only)
+        id: pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          status=$(curl --silent --show-error --output /tmp/pwr-pages-state.json --write-out '%{http_code}' \
+            --header "Authorization: Bearer $GH_TOKEN" \
+            --header 'Accept: application/vnd.github+json' \
+            "https://api.github.com/repos/$REPOSITORY/pages")
+          if [ "$status" = "200" ]; then
+            echo 'enabled=true' >> "$GITHUB_OUTPUT"
+            echo 'GitHub Pages already exists; attempting deployment.' >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$status" = "404" ]; then
+            echo 'enabled=false' >> "$GITHUB_OUTPUT"
+            echo 'GitHub Pages is NOT enabled for this repository. Enable Settings > Pages > Build and deployment > Source: GitHub Actions; then re-run this workflow. The review-only artifact below remains downloadable.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Unexpected Pages API status: $status" >&2
+            cat /tmp/pwr-pages-state.json >&2
+            exit 1
+          fi
+      - name: Upload verified standalone site for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: pwr-music-public-noindex-site
+          path: pwr-music/
+          retention-days: 14
       - name: Configure GitHub Pages
+        if: steps.pages.outputs.enabled == 'true'
         uses: actions/configure-pages@v5
       - name: Upload public preview artifact
+        if: steps.pages.outputs.enabled == 'true'
         uses: actions/upload-pages-artifact@v4
         with:
           path: pwr-music
       - name: Deploy public preview
+        if: steps.pages.outputs.enabled == 'true'
         id: deployment
         uses: actions/deploy-pages@v4
       - name: Record published preview
-        if: success()
+        if: steps.pages.outputs.enabled == 'true' && success()
         run: |
           echo "PWR Music + Henry Miguel public preview: ${{ steps.deployment.outputs.page_url }}" >> "$GITHUB_STEP_SUMMARY"
           echo "This does not change pwrmusic.net, hmiguel.com or any WordPress/WooCommerce store." >> "$GITHUB_STEP_SUMMARY"
