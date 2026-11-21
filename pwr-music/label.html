@@ -30,7 +30,7 @@ footer{border-top:1px solid #ffffff38;padding-block:28px;color:#b5c3d2;font-size
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style></head>
 <body class="label"><header><div class="wrap"><a class="brand" id="brand-home" href="label.html">PWR <b>MUSIC</b></a>
-<nav><a id="sibling" href="henry-miguel.html">Henry Miguel · Artist</a><a id="full-catalog" href="preview.html">Full catalog / Catálogo</a><div class="switch"><button id="lang-en" aria-pressed="true" type="button">EN</button><button id="lang-es" aria-pressed="false" type="button">ES</button></div></nav></div></header>
+<nav><a id="sibling" href="henry-miguel.html">Henry Miguel · Artist</a><a id="full-catalog" href="preview.html">Full catalog / Catálogo</a><a id="genres-preview" href="genres.html">Genres / Géneros</a><div class="switch"><button id="lang-en" aria-pressed="true" type="button">EN</button><button id="lang-es" aria-pressed="false" type="button">ES</button></div></nav></div></header>
 <main class="wrap"><div class="eyebrow">LABEL / RELEASE CATALOG · OWNER-APPROVED RELEASED MUSIC · PUBLIC PREVIEW</div>
 <h1 id="hero">Music without borders.</h1><p class="lead" id="lead">Explore 203 distributor-listed releases and 81 identified recordings. Discover confirmed Spotify listening links and the stories behind the songs.</p>
 <div class="pills"><a class="primary" href="#catalog" id="browse">Explore music</a><a href="https://open.spotify.com/artist/2pTKBqTi5NvfM4d4YBVRXf" target="_blank" rel="noopener noreferrer" id="listen">Official Spotify artist</a><a href="https://pwrmusic.net/shop/" target="_blank" rel="noopener noreferrer" id="shop">Existing WordPress shop</a></div>
@@ -145,7 +145,7 @@ for(const [id,key] of [["browse","browse"],["listen","listen"],["shop","shop"],[
 $("spotlight-title").textContent=document.body.classList.contains("artist")?t.artistSpotTitle:t.spotTitle;$("spotlight-desc").textContent=document.body.classList.contains("artist")?t.artistSpotDesc:t.spotDesc;
 $("query").placeholder=t.q;for(const [i,label] of [t.all,t.matched,t.pending].entries())$("verification").options[i].textContent=label;$("genre").options[0].textContent=t.genre;
 for(const l of ["en","es"])$("lang-"+l).setAttribute("aria-pressed",String(l===state.lang));
-$("sibling").href=publicPreviewLink("henry-miguel.html");$("full-catalog").href=publicPreviewLink("preview.html");$("brand-home").href=publicPreviewLink("label.html");
+$("sibling").href=publicPreviewLink("henry-miguel.html");$("full-catalog").href=publicPreviewLink("preview.html");$("genres-preview").href=publicPreviewLink("genres.html");$("brand-home").href=publicPreviewLink("label.html");
 renderSpotlight();draw();}
 for(const g of [...new Set(DATA.songs.map(s=>s.genre).filter(Boolean))].sort()){const o=text("option","",g);o.value=g;$("genre").append(o);}
 if(previewParams().get("genre")&&[...$("genre").options].some(o=>o.value===previewParams().get("genre")))state.genre=previewParams().get("genre");
