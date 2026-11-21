@@ -22,10 +22,22 @@ footer{font-size:.9rem;color:#c6d5e2}footer a{color:#bce5ff}
 <h1>Music without borders.<br><span lang="es">Música sin fronteras.</span></h1>
 <p class="lead">Explore already released Henry Miguel music through two distinct bilingual websites. / Explora música ya publicada de Henry Miguel en dos sitios bilingües con identidad propia.</p>
 <div class="grid">
-<article><h2>PWR Music</h2><p>Label and released-music catalog. Albums, songs, verified tracklists, genre discovery and official listening links.</p><p lang="es">Sello y catálogo publicado: álbumes, canciones, géneros y enlaces de escucha.</p><a href="./label.html">Explore PWR Music / Explorar</a></article>
-<article><h2>Henry Miguel</h2><p>Artist-focused preview: the performer, early recordings and Spotify music discovery.</p><p lang="es">Vista del artista, sus primeras grabaciones y música publicada.</p><a href="./henry-miguel.html">Meet Henry Miguel / Conócelo</a></article>
-<article><h2>Complete discovery</h2><p>Combined searchable directory for offline-friendly music metadata review.</p><p lang="es">Directorio completo para buscar y revisar los lanzamientos publicados.</p><a href="./preview.html">Full catalog / Catálogo completo</a></article>
+<article><h2>PWR Music</h2><p>Label and released-music catalog. Albums, songs, verified tracklists, genre discovery and official listening links.</p><p lang="es">Sello y catálogo publicado: álbumes, canciones, géneros y enlaces de escucha.</p><a href="./label.html" data-preview-page="label.html">Explore PWR Music / Explorar</a></article>
+<article><h2>Henry Miguel</h2><p>Artist-focused preview: the performer, early recordings and Spotify music discovery.</p><p lang="es">Vista del artista, sus primeras grabaciones y música publicada.</p><a href="./henry-miguel.html" data-preview-page="henry-miguel.html">Meet Henry Miguel / Conócelo</a></article>
+<article><h2>Complete discovery</h2><p>Combined searchable directory for offline-friendly music metadata review.</p><p lang="es">Directorio completo para buscar y revisar los lanzamientos publicados.</p><a href="./preview.html" data-preview-page="preview.html">Full catalog / Catálogo completo</a></article>
 </div>
 <p class="notice" role="note"><strong>Preview only / Solo vista previa.</strong> This is not a migration or replacement for the current websites. Existing WordPress pages, WooCommerce purchases, accounts, customer downloads and legacy URLs remain active. No unreleased drafts, private Drive audio or unlicensed full masters are hosted here.</p>
 <footer><p>Current official websites: <a href="https://pwrmusic.net/">PWRMusic.net</a> · <a href="https://hmiguel.com/">hmiguel.com</a> · <a href="https://pwrmusic.net/shop/">Existing music store / Tienda actual</a></p><p>Only distributor-confirmed released metadata is shown. Spotify availability may vary by country. This public preview intentionally requests no search indexing.</p></footer>
-</main></body></html>
+</main><script>
+/* Keep the hub's three real links usable inside the public third-party HTML
+   renderer. Relative URLs remain intact for local files and future Pages. */
+(() => {
+  if (location.hostname !== 'htmlpreview.github.io') return;
+  const previewRoot = 'https://htmlpreview.github.io/?https://github.com/hbue4587/hbue4587/blob/main/pwr-music/';
+  const allowed = new Set(['label.html', 'henry-miguel.html', 'preview.html']);
+  for (const link of document.querySelectorAll('a[data-preview-page]')) {
+    const target = link.getAttribute('data-preview-page');
+    if (allowed.has(target)) link.href = previewRoot + target;
+  }
+})();
+</script></body></html>
