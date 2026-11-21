@@ -34,10 +34,13 @@ jobs:
           test -s pwr-music/label.html
           test -s pwr-music/henry-miguel.html
           test -s pwr-music/preview.html
+          test -s pwr-music/singles.html
+          test "$(grep -c 'class="single"' pwr-music/singles.html)" -eq 34
+          grep -q 'noindex,nofollow,noarchive' pwr-music/singles.html
           grep -q 'noindex,nofollow,noarchive' pwr-music/index.html
           grep -q 'noindex,nofollow,noarchive' pwr-music/label.html
           grep -q 'noindex,nofollow,noarchive' pwr-music/henry-miguel.html
-          if grep -Ein 'https://(drive.google.com|docs.google.com)|artist.amuse.io|\.mp3|\.wav' pwr-music/{index,label,henry-miguel,preview}.html; then
+          if grep -Ein 'https://(drive.google.com|docs.google.com)|artist.amuse.io|\.mp3|\.wav' pwr-music/{index,label,henry-miguel,preview,singles}.html; then
             echo 'Unexpected private audio/admin link or audio filename in public preview'
             exit 1
           fi
