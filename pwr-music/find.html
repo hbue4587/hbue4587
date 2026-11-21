@@ -27,7 +27,7 @@
 const data=JSON.parse(document.getElementById('public-catalog').textContent);
 const q=document.getElementById('q'),kind=document.getElementById('kind'),stream=document.getElementById('stream'),out=document.getElementById('results'),status=document.getElementById('status'),more=document.getElementById('more');
 const previewRoot='https://htmlpreview.github.io/?https://github.com/hbue4587/hbue4587/blob/main/pwr-music/';
-function page(file){return location.hostname==='htmlpreview.github.io'?previewRoot+file:'./'+file}
+function page(file){if(location.hostname==='htmlpreview.github.io')return previewRoot+file;if(location.protocol==='file:'||location.pathname.includes('/pwr-preview-20261121/')){file=file.replace(/^songs[.]html/,'OPEN-PWR-SONGS.html').replace(/^discography[.]html/,'OPEN-PWR-DISCOGRAPHY.html').replace(/^henry-miguel[.]html/,'OPEN-HENRY-MIGUEL.html');}return './'+file}
 for(const a of document.querySelectorAll('a[data-preview-page]'))a.href=page(a.dataset.previewPage);
 function fold(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim()}
 const findText=data.map(v=>fold([v.title,v.album,v.genre,v.isrc,v.upc].filter(Boolean).join(' ')));
