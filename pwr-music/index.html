@@ -77,6 +77,7 @@ footer{font-size:.9rem;color:#c6d5e2}footer a{color:#bce5ff}
 <article><h2>Seven verified albums</h2><p>Browse all 80 ISRC-matched recordings with real track order, 70 official Spotify links and an in-page player.</p><p lang="es">Siete álbumes y 80 canciones cotejadas, con 70 enlaces oficiales y un reproductor opcional.</p><a href="./albums.html" data-preview-page="albums.html">Open 7 albums / Ver 7 álbumes</a></article>
 <article><h2>34 published singles / 34 sencillos</h2><p>Search 34 UPC-verified one-track releases. Find original release titles and clearly labeled unverified Spotify searches.</p><p lang="es">Busca 34 sencillos publicados con UPC y enlaces a búsquedas de Spotify sin verificar.</p><a href="./singles.html" data-preview-page="singles.html">Explore singles / Ver sencillos</a></article>
 <article><h2>Listen by genre / Escucha por género</h2><p>Discover 81 released ISRC recordings by confirmed Amuse album genre, with 71 exact Spotify links and 10 clearly unverified searches.</p><p lang="es">Explora 81 canciones verificadas por género, con 71 enlaces oficiales y 10 búsquedas marcadas sin verificar.</p><a href="./genres.html" data-preview-page="genres.html">Browse genres / Explorar géneros</a></article>
+<article><h2>PWR Radio / Radio PWR</h2><p>Explore 71 individually verified Spotify recordings with a genre-aware queue, next/previous controls, shuffle, and official embedded listening.</p><p lang="es">Escucha 71 canciones verificadas por ISRC con géneros, orden de reproducción y selección aleatoria en Spotify.</p><a href="./radio.html" data-preview-page="radio.html">Play PWR Radio / Escuchar Radio PWR</a></article>
 <article><h2>Complete discovery</h2><p>Combined searchable directory for offline-friendly music metadata review.</p><p lang="es">Directorio completo para buscar y revisar los lanzamientos publicados.</p><a href="./preview.html" data-preview-page="preview.html">Full catalog / Catálogo completo</a></article>
 </div>
 <p class="notice" role="note"><strong>Preview only / Solo vista previa.</strong> This is not a migration or replacement for the current websites. Existing WordPress pages, WooCommerce purchases, accounts, customer downloads and legacy URLs remain active. No unreleased drafts, private Drive audio or unlicensed full masters are hosted here.</p>
@@ -86,7 +87,7 @@ footer{font-size:.9rem;color:#c6d5e2}footer a{color:#bce5ff}
    renderer. Relative URLs remain intact for local files and future Pages. */
 (() => {
   const previewRoot = 'https://htmlpreview.github.io/?https://github.com/hbue4587/hbue4587/blob/main/pwr-music/';
-  const allowed = new Set(['label.html', 'henry-miguel.html', 'preview.html', 'albums.html', 'singles.html', 'genres.html']);
+  const allowed = new Set(['label.html', 'henry-miguel.html', 'preview.html', 'albums.html', 'singles.html', 'genres.html', 'radio.html']);
   for (const link of document.querySelectorAll('a[data-preview-page]')) {
     const target = link.getAttribute('data-preview-page');
     if (allowed.has(target) && location.hostname === 'htmlpreview.github.io') link.href = previewRoot + target;
