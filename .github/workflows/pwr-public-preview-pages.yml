@@ -40,6 +40,9 @@ jobs:
           test -s pwr-music/credits.html
           test -s pwr-music/discography.html
           test -s pwr-music/songs.html
+          test -s pwr-music/find.html
+          test -s pwr-music/genres.html
+          test -s pwr-music/albums.html
           test "$(grep -c 'class="song"' pwr-music/credits.html)" -eq 80
           test "$(grep -c 'class="single"' pwr-music/singles.html)" -eq 34
           test "$(grep -c 'class="release"' pwr-music/discography.html)" -eq 203
@@ -59,12 +62,12 @@ jobs:
           grep -q 'noindex,nofollow,noarchive' pwr-music/index.html
           grep -q 'noindex,nofollow,noarchive' pwr-music/label.html
           grep -q 'noindex,nofollow,noarchive' pwr-music/henry-miguel.html
-          if grep -Ein 'https://(drive.google.com|docs.google.com)|artist.amuse.io|\.mp3|\.wav' pwr-music/{index,label,henry-miguel,preview,singles,radio,press,credits,discography,songs}.html; then
+          if grep -Ein 'https://(drive.google.com|docs.google.com)|artist.amuse.io|\.mp3|\.wav' pwr-music/{index,label,henry-miguel,preview,singles,radio,press,credits,discography,songs,find,genres,albums}.html; then
             echo 'Unexpected private audio/admin link or audio filename in public preview'
             exit 1
           fi
           echo 'Only public HTML metadata with noindex was staged'
-      - name: Check whether this repository has Pages enabled (read-only)
+      - name: Check or initialize no-cost Pages preview (never production hosting)
         id: pages
         env:
           GH_TOKEN: ${{ github.token }}
@@ -72,19 +75,39 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          status=$(curl --silent --show-error --output /tmp/pwr-pages-state.json --write-out '%{http_code}' \
-            --header "Authorization: Bearer $GH_TOKEN" \
-            --header 'Accept: application/vnd.github+json' \
-            "https://api.github.com/repos/$REPOSITORY/pages")
+          get_pages_status() {
+            curl --silent --show-error --output /tmp/pwr-pages-state.json --write-out '%{http_code}' \
+              --header "Authorization: Bearer $GH_TOKEN" \
+              --header 'Accept: application/vnd.github+json' \
+              "https://api.github.com/repos/$REPOSITORY/pages"
+          }
+          status=$(get_pages_status)
+          if [ "$status" = "404" ]; then
+            # A public Pages preview doesn't change production DNS, WordPress or commerce.
+            echo 'No Pages preview exists; requesting free GitHub Actions Pages site.'
+            create_status=$(curl --silent --show-error --output /tmp/pwr-pages-create.json --write-out '%{http_code}' \
+              --request POST \
+              --header "Authorization: Bearer $GH_TOKEN" \
+              --header 'Accept: application/vnd.github+json' \
+              --header 'Content-Type: application/json' \
+              --data '{"build_type":"workflow"}' \
+              "https://api.github.com/repos/$REPOSITORY/pages")
+            if [ "$create_status" = "201" ] || [ "$create_status" = "200" ] || [ "$create_status" = "422" ]; then
+              status=$(get_pages_status)
+            elif [ "$create_status" = "403" ]; then
+              echo 'GitHub Actions token lacks permission to initialize Pages (HTTP 403).'
+            else
+              echo "Pages initialization did not succeed (HTTP $create_status)."
+            fi
+          fi
           if [ "$status" = "200" ]; then
             echo 'enabled=true' >> "$GITHUB_OUTPUT"
-            echo 'GitHub Pages already exists; attempting deployment.' >> "$GITHUB_STEP_SUMMARY"
+            echo 'GitHub Pages preview confirmed; deploying verified noindex files.' >> "$GITHUB_STEP_SUMMARY"
           elif [ "$status" = "404" ]; then
             echo 'enabled=false' >> "$GITHUB_OUTPUT"
-            echo 'GitHub Pages is NOT enabled for this repository. Enable Settings > Pages > Build and deployment > Source: GitHub Actions; then re-run this workflow. The review-only artifact below remains downloadable.' >> "$GITHUB_STEP_SUMMARY"
+            echo 'GitHub Pages remains disabled. In repository Settings > Pages choose GitHub Actions. Downloadable HTML artifact is available below.' >> "$GITHUB_STEP_SUMMARY"
           else
             echo "Unexpected Pages API status: $status" >&2
-            cat /tmp/pwr-pages-state.json >&2
             exit 1
           fi
       - name: Upload verified standalone site for review
