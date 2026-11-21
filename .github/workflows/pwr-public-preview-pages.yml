@@ -38,7 +38,7 @@ jobs:
           test -s pwr-music/singles.html
           test "$(grep -c 'class="single"' pwr-music/singles.html)" -eq 34
           grep -q 'noindex,nofollow,noarchive' pwr-music/radio.html
-          grep -q '71 exact Spotify recordings' pwr-music/radio.html
+          grep -q '71</strong> exact Spotify recordings' pwr-music/radio.html
           grep -q 'noindex,nofollow,noarchive' pwr-music/singles.html
           grep -q 'noindex,nofollow,noarchive' pwr-music/index.html
           grep -q 'noindex,nofollow,noarchive' pwr-music/label.html
