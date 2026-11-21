@@ -17,10 +17,31 @@ a{color:#fff}article a{display:inline-flex;align-items:center;justify-content:ce
 article a:hover,article a:focus-visible{background:#fff0c7;outline:2px solid white;outline-offset:3px}
 .notice{border-left:3px solid #f9d685;padding:12px 17px;background:#ffffff0c;line-height:1.6;color:#c6d5e2}
 footer{font-size:.9rem;color:#c6d5e2}footer a{color:#bce5ff}
+.quick-search{margin:30px 0 8px;padding:24px;border-radius:18px;border:1px solid #91a3b75e;background:#ffffff0a}
+.quick-search h2{margin:0 0 10px}.quick-search p{color:#c8d7e3}
+.quick-search label{display:block;font-weight:700;margin:14px 0 8px}
+.quick-search input{display:block;width:100%;min-height:48px;background:#f3f7fb;color:#102133;font:inherit;padding:12px 14px;border:2px solid #97b3cb;border-radius:10px}
+.quick-search input:focus-visible,.quick-search button:focus-visible{outline:3px solid #f9d685;outline-offset:3px}
+.search-buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.search-buttons button{background:#f9d685;border:0;color:#192333;border-radius:10px;font:inherit;font-weight:800;padding:13px 18px;min-height:48px;cursor:pointer}
+.search-buttons button:nth-child(2){background:#c2e4ff}
+.search-buttons button:hover{filter:brightness(1.1)}
+.search-footnote{font-size:.9rem}
+@media(max-width:520px){.search-buttons{flex-direction:column}.search-buttons button{width:100%}}
 </style></head><body><main>
 <p class="eyebrow">PWR Music International · Public preview / Vista pública</p>
 <h1>Music without borders.<br><span lang="es">Música sin fronteras.</span></h1>
 <p class="lead">Explore already released Henry Miguel music through two distinct bilingual websites. / Explora música ya publicada de Henry Miguel en dos sitios bilingües con identidad propia.</p>
+<section class="quick-search" aria-labelledby="find-heading">
+<h2 id="find-heading">Find released music / Busca música publicada</h2>
+<p>Search released titles, UPCs and verified song ISRCs. / Busca títulos publicados, UPC e ISRC verificados.</p>
+<form id="quick-find" action="./label.html" method="get" role="search">
+<label for="music-query">Song, album, UPC or ISRC / Canción, álbum, UPC o ISRC</label>
+<input id="music-query" name="q" type="search" required maxlength="120" autocomplete="off" placeholder="e.g. BACHATA PEGAJOSA or SE6132686828">
+<div class="search-buttons"><button type="submit" data-preview-page="label.html">Search releases / Buscar lanzamientos</button><button type="submit" data-preview-page="henry-miguel.html" formaction="./henry-miguel.html">Search songs / Buscar canciones</button></div>
+</form>
+<p class="search-footnote">Owner-confirmed released metadata only; no private archive search. / Solo metadatos publicados, sin archivos privados.</p>
+</section>
 <div class="grid">
 <article><h2>PWR Music</h2><p>Label and released-music catalog. Albums, songs, verified tracklists, genre discovery and official listening links.</p><p lang="es">Sello y catálogo publicado: álbumes, canciones, géneros y enlaces de escucha.</p><a href="./label.html" data-preview-page="label.html">Explore PWR Music / Explorar</a></article>
 <article><h2>Henry Miguel</h2><p>Artist-focused preview: the performer, early recordings and Spotify music discovery.</p><p lang="es">Vista del artista, sus primeras grabaciones y música publicada.</p><a href="./henry-miguel.html" data-preview-page="henry-miguel.html">Meet Henry Miguel / Conócelo</a></article>
@@ -32,12 +53,26 @@ footer{font-size:.9rem;color:#c6d5e2}footer a{color:#bce5ff}
 /* Keep the hub's three real links usable inside the public third-party HTML
    renderer. Relative URLs remain intact for local files and future Pages. */
 (() => {
-  if (location.hostname !== 'htmlpreview.github.io') return;
   const previewRoot = 'https://htmlpreview.github.io/?https://github.com/hbue4587/hbue4587/blob/main/pwr-music/';
   const allowed = new Set(['label.html', 'henry-miguel.html', 'preview.html']);
   for (const link of document.querySelectorAll('a[data-preview-page]')) {
     const target = link.getAttribute('data-preview-page');
-    if (allowed.has(target)) link.href = previewRoot + target;
+    if (allowed.has(target) && location.hostname === 'htmlpreview.github.io') link.href = previewRoot + target;
   }
+  // Keep the GitHub source URL intact inside the third-party renderer.
+  function quickSearchUrl(file, query) {
+    const page = file === 'henry-miguel.html' ? 'henry-miguel.html' : 'label.html';
+    const view = page === 'henry-miguel.html' ? 'songs' : 'releases';
+    const params = new URLSearchParams({ view, q: query });
+    return location.hostname === 'htmlpreview.github.io'
+      ? previewRoot + page + '#' + params.toString()
+      : './' + page + '?' + params.toString();
+  }
+  document.getElementById('quick-find')?.addEventListener('submit', event => {
+    event.preventDefault();
+    const query = document.getElementById('music-query').value.trim();
+    if (!query) return;
+    location.assign(quickSearchUrl(event.submitter?.getAttribute('data-preview-page'), query));
+  });
 })();
 </script></body></html>
