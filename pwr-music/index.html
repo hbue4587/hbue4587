@@ -97,7 +97,7 @@ These spreadsheet-safe, public-metadata-only files include 71 exact Spotify trac
    renderer. Relative URLs remain intact for local files and future Pages. */
 (() => {
   const previewRoot = 'https://htmlpreview.github.io/?https://github.com/hbue4587/hbue4587/blob/main/pwr-music/';
-  const allowed = new Set(['label.html', 'henry-miguel.html', 'preview.html', 'albums.html', 'singles.html', 'genres.html', 'radio.html', 'press.html', 'credits.html', 'discography.html', 'spotlight.html']);
+  const allowed = new Set(['label.html', 'henry-miguel.html', 'preview.html', 'albums.html', 'singles.html', 'genres.html', 'radio.html', 'press.html', 'credits.html', 'discography.html', 'spotlight.html', 'songs.html', 'find.html']);
   for (const link of document.querySelectorAll('a[data-preview-page]')) {
     const target = link.getAttribute('data-preview-page');
     if (allowed.has(target) && location.hostname === 'htmlpreview.github.io') link.href = previewRoot + target;
