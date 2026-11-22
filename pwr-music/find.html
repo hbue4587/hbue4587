@@ -18,7 +18,7 @@
 <p>Choose up to 12 ISRC-matched published recordings from the search results and share official Spotify links. This is a shareable listening list, not a Spotify playlist or an audio download. / Elige hasta 12 canciones verificadas y comparte sus enlaces oficiales; no es una lista creada en Spotify.</p>
 <p id="saved-status" role="status" aria-live="polite">0 of 12 selected / 0 de 12 seleccionadas</p>
 <div id="saved-tracks" class="saved-tracks" aria-label="Selected official Spotify links / Enlaces seleccionados"></div>
-<div class="saved-actions"><a id="saved-link" class="more" href="#" style="text-decoration:none;display:inline-flex;align-items:center;margin:6px 0">Share listening shortlist / Compartir selección</a><button id="saved-clear" type="button" class="clear">Clear selections / Borrar selección</button></div>
+<div class="saved-actions"><a id="saved-link" class="more" href="#" style="text-decoration:none;display:inline-flex;align-items:center;margin:6px 0">Share listening shortlist / Compartir selección</a><button id="saved-export" type="button" class="clear" disabled>Copy-ready Spotify links / Enlaces para copiar</button><button id="saved-clear" type="button" class="clear">Clear selections / Borrar selección</button></div><div id="saved-export-panel" hidden><label for="saved-export-text">Official Spotify recordings / Grabaciones oficiales de Spotify</label><textarea id="saved-export-text" readonly rows="8" style="display:block;width:100%;max-width:840px;margin-top:8px;padding:12px;font:inherit;border-radius:9px" aria-label="Copyable Spotify track titles and verified links / Canciones y enlaces cotejados"></textarea><p class="muted">Select and copy the text to share with friends; this does not create a Spotify playlist. / Selecciona y copia el texto para compartir; esto no crea una lista en Spotify.</p></div>
 </section>
 <section class="toolbar" role="search" aria-label="Find released music / Buscar música publicada">
 <label for="q">Search title, album, genre, UPC or ISRC / Buscar<input id="q" type="search" autocomplete="off" maxlength="120" placeholder="Bachata, Reggae, SE613..., 733359..."></label>
@@ -42,12 +42,15 @@ const data=JSON.parse(document.getElementById('public-catalog').textContent);
 const q=document.getElementById('q'),kind=document.getElementById('kind'),stream=document.getElementById('stream'),genre=document.getElementById('genre'),albumSelect=document.getElementById('album'),out=document.getElementById('results'),status=document.getElementById('status'),more=document.getElementById('more'),share=document.getElementById('share-search'),letters=document.getElementById('letter-buttons'),reset=document.getElementById('reset');
 const selected=new Set();
 const eligibleSaved=new Map(data.filter(v=>v.type==='song'&&v.spotify&&v.isrc).map(v=>[v.isrc,v]));
-const savedHost=document.getElementById('saved-tracks'),savedStatus=document.getElementById('saved-status'),savedLink=document.getElementById('saved-link'),savedClear=document.getElementById('saved-clear');
+const savedHost=document.getElementById('saved-tracks'),savedStatus=document.getElementById('saved-status'),savedLink=document.getElementById('saved-link'),savedClear=document.getElementById('saved-clear'),savedExport=document.getElementById('saved-export'),savedExportPanel=document.getElementById('saved-export-panel'),savedExportText=document.getElementById('saved-export-text');
 function renderSaved(){
  savedHost.replaceChildren();
  const ids=[...selected].filter(id=>eligibleSaved.has(id)).slice(0,12);
  savedStatus.textContent=ids.length+' of 12 selected / '+ids.length+' de 12 seleccionadas';
  savedLink.href=ids.length?'#list='+ids.join(','):'#';
+ savedExport.disabled=ids.length===0;
+ savedExportPanel.hidden=true;
+ savedExportText.value='';
  for(const id of ids){
   const track=eligibleSaved.get(id),entry=el('div','saved-entry');
   const name=el('strong','',track.title),link=el('a','','▶ Official Spotify / Spotify oficial');
@@ -179,6 +182,14 @@ for(const control of [q,kind,stream,genre,albumSelect])control.addEventListener(
 more.addEventListener('click',()=>{limit+=24;render()});
 reset.addEventListener('click',()=>{q.value='';kind.value='';stream.value='';genre.value='';albumSelect.value='';selectedLetter='';limit=24;render();});
 savedClear.addEventListener('click',()=>{selected.clear();render();});
+savedExport.addEventListener('click',()=>{
+ const entries=[...selected].map(id=>eligibleSaved.get(id)).filter(Boolean);
+ if(!entries.length)return;
+ const nl=String.fromCharCode(10);
+ savedExportText.value=entries.map(v=>v.title+nl+v.spotify).join(nl+nl);
+ savedExportPanel.hidden=false;
+ savedExportText.focus();savedExportText.select();
+});
 document.getElementById('surprise').addEventListener('click',()=>{
  const pool=data.filter(v=>v.type==='song'&&v.spotify&&v.isrc);
  if(!pool.length)return;
