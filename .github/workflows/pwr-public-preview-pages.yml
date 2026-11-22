@@ -51,7 +51,7 @@ jobs:
           test "$(grep -o 'class="playlist"' pwr-music/playlists.html | wc -l)" -eq 8
           test "$(grep -o 'class="track"' pwr-music/playlists.html | wc -l)" -eq 11
           grep -q 'noindex,nofollow,noarchive' pwr-music/playlists.html
-          grep -q 'data-preview-page=\"playlists.html\"' pwr-music/index.html
+          grep -Fq 'data-preview-page="playlists.html"' pwr-music/index.html
           test -s pwr-music/spotlight.html
           test "$(grep -c 'class="track" data-search=' pwr-music/spotlight.html)" -eq 13
           grep -q 'noindex,nofollow,noarchive' pwr-music/spotlight.html
