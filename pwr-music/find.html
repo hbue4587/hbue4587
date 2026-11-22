@@ -15,7 +15,7 @@
 <label for="q">Search title, album, genre, UPC or ISRC / Buscar<input id="q" type="search" autocomplete="off" maxlength="120" placeholder="Bachata, Reggae, SE613..., 733359..."></label>
 <label for="kind">Show / Mostrar<select id="kind"><option value="">Everything / Todo</option><option value="song">Songs / Canciones (81)</option><option value="release">Releases / Lanzamientos (203)</option><option value="single">Singles / Sencillos (34)</option><option value="ep">EP-length / Formato EP (2)</option><option value="album">Album-length / Formato álbum (167)</option><option value="spotlight">Spotify-only / Solo Spotify (13)</option></select></label>
 <label for="stream">Listening / Escucha<select id="stream"><option value="">All / Todos</option><option value="spotify">Exact Spotify song link (71)</option><option value="pending">Song link pending (10)</option><option value="spotlight">Spotify-only · ISRC pending (13)</option></select></label>
-<label for="genre">Verified song genre / Género confirmado<select id="genre"><option value="">All genres / Todos los géneros</option><option value="Salsa y Tropical">Salsa y Tropical</option><option value="Reggae">Reggae</option><option value="Reggaeton y Hip-Hop">Reggaeton y Hip-Hop</option></select></label>
+<label for="genre">Verified song/album genre / Género confirmado<select id="genre"><option value="">All genres / Todos los géneros</option><option value="Salsa y Tropical">Salsa y Tropical</option><option value="Reggae">Reggae</option><option value="Reggaeton y Hip-Hop">Reggaeton y Hip-Hop</option></select></label>
 </section>
 <p id="status" class="status" role="status" aria-live="polite">297 searchable listings (284 identified catalog + 13 Spotify-only) / 297 resultados</p>
 <p><button id="surprise" class="more" type="button">Surprise me — play a verified song / Sorpréndeme — escucha una canción verificada</button></p>
@@ -33,7 +33,13 @@ const previewRoot='https://htmlpreview.github.io/?https://github.com/hbue4587/hb
 function page(file){if(location.hostname==='htmlpreview.github.io')return previewRoot+file;if(location.protocol==='file:'||location.pathname.includes('/pwr-preview-20261121/')){file=file.replace(/^songs[.]html/,'OPEN-PWR-SONGS.html').replace(/^discography[.]html/,'OPEN-PWR-DISCOGRAPHY.html').replace(/^henry-miguel[.]html/,'OPEN-HENRY-MIGUEL.html').replace(/^radio[.]html/,'OPEN-PWR-RADIO.html').replace(/^spotlight[.]html/,'OPEN-PWR-SPOTLIGHT.html');}return './'+file}
 for(const a of document.querySelectorAll('a[data-preview-page]'))a.href=page(a.dataset.previewPage);
 function fold(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
-const findText=data.map(v=>fold([v.title,v.album,v.genre,v.isrc,v.upc].filter(Boolean).join(' ')));
+// Verified album genres are inherited only from released ISRC-matched songs with the same UPC.
+const releaseGenres=new Map();
+for(const v of data.filter(v=>v.type==='song'&&v.genre&&v.upc)){
+ if(releaseGenres.has(v.upc)&&releaseGenres.get(v.upc)!==v.genre)releaseGenres.set(v.upc,null);
+ else if(!releaseGenres.has(v.upc))releaseGenres.set(v.upc,v.genre);
+}
+const findText=data.map(v=>fold([v.title,v.album,v.genre,v.type==='release'&&v.matched?releaseGenres.get(v.upc):null,v.isrc,v.upc].filter(Boolean).join(' ')));
 let matched=[],limit=24;
 function el(name,cls,txt){const n=document.createElement(name);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n}
 function action(root,label,url,primary){const a=el('a',primary?'primary':'',label);a.href=url;if(url.startsWith('https://open.spotify.com/')||url==='https://music.amazon.com/albums/B0HJFBDZ8Z'){a.target='_blank';a.rel='noopener noreferrer'}root.append(a)}
@@ -59,7 +65,9 @@ a.append(el('span','muted','Album-level listing only — this song’s Amazon IS
 card.append(a);
 }else{
 card.append(el('p','meta',v.count+' reported track(s) / pista(s) · '+(v.matched?'UPC/ISRC tracklist matched / Lista cotejada':'Release metadata only / Sin lista de pistas verificada')),el('code','', 'UPC '+v.upc));
+if(v.matched&&releaseGenres.get(v.upc))card.append(el('p','meta','Verified Amuse genre / Género cotejado: '+releaseGenres.get(v.upc)));
 const a=el('div','actions');action(a,'Release details / Ver lanzamiento',page('discography.html#release-'+v.upc),true);
+if(v.matched)action(a,'Browse album songs / Ver canciones del álbum','#q='+encodeURIComponent(v.upc)+'&kind=song',false);
 if(v.upc==='7333595600526'){
 action(a,'Amazon Music · Full album / Álbum completo','https://music.amazon.com/albums/B0HJFBDZ8Z',false);
 a.append(el('span','muted','Public album title and tracklist match only; Amazon UPC/ISRC not verified / UPC e ISRC de Amazon sin cotejar'));
@@ -100,7 +108,7 @@ return card;
 function relevance(v,term){if(!term)return 5;const title=fold(v.title),album=fold(v.album);if(v.type==='release'&&title===term)return -1;if((v.type==='song'&&fold(v.isrc)===term)||(v.type==='release'&&fold(v.upc)===term)||title===term)return 0;if(title.startsWith(term))return 1;if(title.includes(term))return 2;if(album===term)return 3;if(album.startsWith(term))return 4;return 5;}
 function render(){
 const normalized=fold(q.value),terms=normalized.split(' ').filter(Boolean),k=kind.value,s=stream.value,g=genre.value;
-matched=data.filter((v,i)=>terms.every(token=>findText[i].includes(token))&&(!k||v.type===k||(v.type==='release'&&(k==='single'?v.count===1:k==='ep'?v.count>=2&&v.count<=6:k==='album'?v.count>=7:false)))&&(!g||(v.type==='song'&&v.genre===g))&&(!s||(s==='spotify'?v.type==='song'&&!!v.spotify:s==='spotlight'?v.type==='spotlight':v.type==='song'&&!v.spotify)));
+matched=data.filter((v,i)=>terms.every(token=>findText[i].includes(token))&&(!k||v.type===k||(v.type==='release'&&(k==='single'?v.count===1:k==='ep'?v.count>=2&&v.count<=6:k==='album'?v.count>=7:false)))&&(!g||(v.type==='song'&&v.genre===g)||(v.type==='release'&&v.matched&&releaseGenres.get(v.upc)===g))&&(!s||(s==='spotify'?v.type==='song'&&!!v.spotify:s==='spotlight'?v.type==='spotlight':v.type==='song'&&!v.spotify)));
 matched.sort((a,b)=>relevance(a,normalized)-relevance(b,normalized)||({song:0,spotlight:1,release:2}[a.type]-{song:0,spotlight:1,release:2}[b.type])||a.title.localeCompare(b.title,'es',{sensitivity:'base',numeric:true}));
 out.replaceChildren(...matched.slice(0,limit).map(makeCard));
 more.hidden=matched.length<=limit;
