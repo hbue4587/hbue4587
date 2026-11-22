@@ -64,10 +64,11 @@ a.append(el('span','muted','Public album title and tracklist match only; Amazon 
 card.append(a);
 }return card;
 }
+function relevance(v,term){if(!term)return 5;const title=fold(v.title),album=fold(v.album);if((v.type==='song'&&fold(v.isrc)===term)||(v.type==='release'&&fold(v.upc)===term)||title===term)return 0;if(title.startsWith(term))return 1;if(title.includes(term))return 2;if(album===term)return 3;if(album.startsWith(term))return 4;return 5;}
 function render(){
-const terms=fold(q.value).split(' ').filter(Boolean),k=kind.value,s=stream.value,g=genre.value;
+const normalized=fold(q.value),terms=normalized.split(' ').filter(Boolean),k=kind.value,s=stream.value,g=genre.value;
 matched=data.filter((v,i)=>terms.every(token=>findText[i].includes(token))&&(!k||v.type===k)&&(!g||(v.type==='song'&&v.genre===g))&&(!s||(s==='spotify'?v.type==='song'&&!!v.spotify:s==='spotlight'?v.type==='spotlight':v.type==='song'&&!v.spotify)));
-matched.sort((a,b)=>({song:0,spotlight:1,release:2}[a.type]-{song:0,spotlight:1,release:2}[b.type])||a.title.localeCompare(b.title,'es',{sensitivity:'base',numeric:true}));
+matched.sort((a,b)=>relevance(a,normalized)-relevance(b,normalized)||({song:0,spotlight:1,release:2}[a.type]-{song:0,spotlight:1,release:2}[b.type])||a.title.localeCompare(b.title,'es',{sensitivity:'base',numeric:true}));
 out.replaceChildren(...matched.slice(0,limit).map(makeCard));
 more.hidden=matched.length<=limit;
 status.textContent='Showing '+Math.min(limit,matched.length)+' of '+matched.length+' matches / Mostrando '+Math.min(limit,matched.length)+' de '+matched.length+' resultados';
