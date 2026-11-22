@@ -35,7 +35,7 @@ function fold(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/
 const findText=data.map(v=>fold([v.title,v.album,v.genre,v.isrc,v.upc].filter(Boolean).join(' ')));
 let matched=[],limit=24;
 function el(name,cls,txt){const n=document.createElement(name);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n}
-function action(root,label,url,primary){const a=el('a',primary?'primary':'',label);a.href=url;if(url.startsWith('https://open.spotify.com/')){a.target='_blank';a.rel='noopener noreferrer'}root.append(a)}
+function action(root,label,url,primary){const a=el('a',primary?'primary':'',label);a.href=url;if(url.startsWith('https://open.spotify.com/')||url==='https://music.amazon.com/albums/B0HJFBDZ8Z'){a.target='_blank';a.rel='noopener noreferrer'}root.append(a)}
 function makeCard(v){
 const card=el('article','item'),type=el('div','type',v.type==='song'?'SONG · CANCIÓN':'RELEASE · LANZAMIENTO');
 card.append(type,el('h2','',v.title));
@@ -43,11 +43,22 @@ if(v.type==='song'){
 card.append(el('p','meta',(v.album||'')+(v.genre?' · '+v.genre:'')),el('code','', 'ISRC '+v.isrc+' · UPC '+v.upc));
 const a=el('div','actions');action(a,'Song details / Ver canción',page('songs.html#isrc='+v.isrc),true);
 if(v.spotify)action(a,'Spotify · Listen / Escuchar',v.spotify,false);
-else a.append(el('span','muted','Exact Spotify link pending / Enlace exacto pendiente'));
+else {
+a.append(el('span','muted','Exact Spotify link pending / Enlace exacto pendiente'));
+if(v.upc==='7333595600526'){
+action(a,'Amazon Music · Full album / Álbum completo','https://music.amazon.com/albums/B0HJFBDZ8Z',false);
+a.append(el('span','muted','Album-level listing only — this song’s Amazon ISRC is not matched / Enlace al álbum; ISRC individual sin cotejar'));
+}
+}
 card.append(a);
 }else{
 card.append(el('p','meta',v.count+' reported track(s) / pista(s) · '+(v.matched?'UPC/ISRC tracklist matched / Lista cotejada':'Release metadata only / Sin lista de pistas verificada')),el('code','', 'UPC '+v.upc));
-const a=el('div','actions');action(a,'Release details / Ver lanzamiento',page('discography.html#release-'+v.upc),true);card.append(a);
+const a=el('div','actions');action(a,'Release details / Ver lanzamiento',page('discography.html#release-'+v.upc),true);
+if(v.upc==='7333595600526'){
+action(a,'Amazon Music · Full album / Álbum completo','https://music.amazon.com/albums/B0HJFBDZ8Z',false);
+a.append(el('span','muted','Public album title and tracklist match only; Amazon UPC/ISRC not verified / UPC e ISRC de Amazon sin cotejar'));
+}
+card.append(a);
 }return card;
 }
 function render(){
