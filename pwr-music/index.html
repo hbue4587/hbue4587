@@ -94,11 +94,11 @@ These spreadsheet-safe, public-metadata-only files include 71 exact Spotify trac
 <p class="notice" role="note"><strong>Preview only / Solo vista previa.</strong> This is not a migration or replacement for the current websites. Existing WordPress pages, WooCommerce purchases, accounts, customer downloads and legacy URLs remain active. No unreleased drafts, private Drive audio or unlicensed full masters are hosted here.</p>
 <footer><p>Current official websites: <a href="https://pwrmusic.net/">PWRMusic.net</a> · <a href="https://hmiguel.com/">hmiguel.com</a> · <a href="https://pwrmusic.net/shop/">Existing music store / Tienda actual</a></p><p>Only distributor-confirmed released metadata is shown. Spotify availability may vary by country. This public preview intentionally requests no search indexing.</p></footer>
 </main><script>
-/* Keep the hub's four real links usable inside the public third-party HTML
+/* Keep the hub's public navigation links usable inside the public third-party HTML
    renderer. Relative URLs remain intact for local files and future Pages. */
 (() => {
   const previewRoot = 'https://htmlpreview.github.io/?https://github.com/hbue4587/hbue4587/blob/main/pwr-music/';
-  const allowed = new Set(['label.html', 'henry-miguel.html', 'preview.html', 'albums.html', 'singles.html', 'genres.html', 'radio.html', 'press.html', 'credits.html', 'discography.html', 'spotlight.html', 'songs.html', 'find.html']);
+  const allowed = new Set(['label.html', 'henry-miguel.html', 'preview.html', 'albums.html', 'singles.html', 'genres.html', 'radio.html', 'press.html', 'credits.html', 'discography.html', 'spotlight.html', 'songs.html', 'find.html', 'playlists.html']);
   for (const link of document.querySelectorAll('a[data-preview-page]')) {
     const target = link.getAttribute('data-preview-page');
     if (allowed.has(target) && location.hostname === 'htmlpreview.github.io') link.href = previewRoot + target;
