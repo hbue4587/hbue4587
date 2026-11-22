@@ -1,5 +1,7 @@
 # Browse released PWR Music · Explorar música publicada
 
+**NEW — Historical Spotify playlist discovery / Listas de Spotify:** [View 8 public playlists with 11 dated artist-track observations](https://htmlpreview.github.io/?https://github.com/hbue4587/hbue4587/blob/main/pwr-music/playlists.html) · [Read the public HTML](https://github.com/hbue4587/hbue4587/blob/main/pwr-music/playlists.html). Spotify for Artists evidence is dated September 23–October 27, 2026; playlist membership may have changed. No private dashboard links or audio, and no claim of current placement. / Ocho listas y once apariciones históricas, sin afirmar inclusión actual.
+
 **NEW — Printable 203-release discography / Discografía para imprimir:** [Open bilingual searchable print/PDF page](https://htmlpreview.github.io/?https://github.com/hbue4587/hbue4587/blob/main/pwr-music/discography.html) · [GitHub source](https://github.com/hbue4587/hbue4587/blob/main/pwr-music/discography.html). All 203 owner-confirmed Amuse UPC releases are included: seven fully matched album tracklists, 196 release-only listings and 34 one-track singles. Online search and format filters; Print / Save PDF includes all releases. / Los 203 lanzamientos disponibles para buscar, filtrar e imprimir. Solo metadatos publicados, sin audio privado.
 
 
