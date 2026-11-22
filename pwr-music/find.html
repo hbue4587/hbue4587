@@ -64,7 +64,7 @@ a.append(el('span','muted','Public album title and tracklist match only; Amazon 
 card.append(a);
 }return card;
 }
-function relevance(v,term){if(!term)return 5;const title=fold(v.title),album=fold(v.album);if((v.type==='song'&&fold(v.isrc)===term)||(v.type==='release'&&fold(v.upc)===term)||title===term)return 0;if(title.startsWith(term))return 1;if(title.includes(term))return 2;if(album===term)return 3;if(album.startsWith(term))return 4;return 5;}
+function relevance(v,term){if(!term)return 5;const title=fold(v.title),album=fold(v.album);if(v.type==='release'&&title===term)return -1;if((v.type==='song'&&fold(v.isrc)===term)||(v.type==='release'&&fold(v.upc)===term)||title===term)return 0;if(title.startsWith(term))return 1;if(title.includes(term))return 2;if(album===term)return 3;if(album.startsWith(term))return 4;return 5;}
 function render(){
 const normalized=fold(q.value),terms=normalized.split(' ').filter(Boolean),k=kind.value,s=stream.value,g=genre.value;
 matched=data.filter((v,i)=>terms.every(token=>findText[i].includes(token))&&(!k||v.type===k)&&(!g||(v.type==='song'&&v.genre===g))&&(!s||(s==='spotify'?v.type==='song'&&!!v.spotify:s==='spotlight'?v.type==='spotlight':v.type==='song'&&!v.spotify)));
