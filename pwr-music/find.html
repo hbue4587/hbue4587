@@ -61,6 +61,10 @@ if(v.upc==='7333595600526'){
 action(a,'Amazon Music · Full album / Álbum completo','https://music.amazon.com/albums/B0HJFBDZ8Z',false);
 a.append(el('span','muted','Public album title and tracklist match only; Amazon UPC/ISRC not verified / UPC e ISRC de Amazon sin cotejar'));
 }
+if(!v.matched){
+action(a,'Search Spotify (unverified) / Buscar en Spotify (sin verificar)','https://open.spotify.com/search/'+encodeURIComponent('Henry Miguel '+v.title),false);
+a.append(el('span','muted','Spotify search only: no UPC/ISRC match verified / Solo búsqueda; coincidencia UPC/ISRC sin verificar'));
+}
 card.append(a);
 }return card;
 }
