@@ -46,6 +46,16 @@ jobs:
           grep -Fq "location.hostname==='htmlpreview.github.io'?'':location.search.slice(1)" pwr-music/find.html
           test -s pwr-music/genres.html
           test -s pwr-music/albums.html
+          test -s pwr-music/verified-releases.csv
+          test -s pwr-music/verified-songs.csv
+          test "$(wc -l < pwr-music/verified-releases.csv | tr -d ' ')" -eq 204
+          test "$(wc -l < pwr-music/verified-songs.csv | tr -d ' ')" -eq 82
+          grep -q 'verified-releases.csv' pwr-music/index.html
+          grep -q 'verified-songs.csv' pwr-music/index.html
+          if grep -Ein 'https://(drive.google.com|docs.google.com)|artist.amuse.io|[.]mp3|[.]wav|raw_master|Dad Handoff' pwr-music/verified-{releases,songs}.csv; then
+            echo 'Unexpected private audio or administrative data in released-metadata export'
+            exit 1
+          fi
           test "$(grep -c 'class="song"' pwr-music/credits.html)" -eq 80
           test "$(grep -c 'class="single"' pwr-music/singles.html)" -eq 34
           test "$(grep -c 'class="release"' pwr-music/discography.html)" -eq 203
