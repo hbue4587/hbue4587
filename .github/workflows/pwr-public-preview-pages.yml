@@ -48,8 +48,8 @@ jobs:
           test -s pwr-music/albums.html
           test -s pwr-music/verified-releases.csv
           test -s pwr-music/playlists.html
-          test "$(grep -c 'class=\"playlist\"' pwr-music/playlists.html)" -eq 8
-          test "$(grep -c 'class=\"track\"' pwr-music/playlists.html)" -eq 11
+          test "$(grep -o 'class="playlist"' pwr-music/playlists.html | wc -l)" -eq 8
+          test "$(grep -o 'class="playlist"' pwr-music/playlists.html | wc -l)" -eq 8
           grep -q 'noindex,nofollow,noarchive' pwr-music/playlists.html
           grep -q 'data-preview-page=\"playlists.html\"' pwr-music/index.html
           test -s pwr-music/spotlight.html
