@@ -48,6 +48,9 @@ jobs:
           test -s pwr-music/singles.html
           test -s pwr-music/credits.html
           test -s pwr-music/discography.html
+          # All unmatched releases offer clearly labeled artist-level discovery, not fabricated album links.
+          test "$(grep -o 'data-spotify-artist-only="true"' pwr-music/discography.html | wc -l)" -eq 196
+          grep -Fq 'does <strong>not</strong> claim that the specific UPC is on Spotify' pwr-music/discography.html
           test -s pwr-music/songs.html
           test -s pwr-music/find.html
           grep -q 'data-preview-page="radio.html"' pwr-music/find.html
