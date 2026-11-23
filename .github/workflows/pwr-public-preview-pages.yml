@@ -54,6 +54,11 @@ jobs:
           grep -q 'OPEN-PWR-RADIO.html' pwr-music/find.html
           grep -Fq "location.hostname==='htmlpreview.github.io'?'':location.search.slice(1)" pwr-music/find.html
           test -s pwr-music/genres.html
+          # The public homepage must show seven real owner-authenticated Amuse uploads.
+          test "$(grep -o 'data-recent-amuse-upc="' pwr-music/index.html | wc -l)" -eq 7
+          grep -Fq 'Recently uploaded albums / Álbumes cargados recientemente' pwr-music/index.html
+          grep -Fq 'not their public streaming release dates' pwr-music/index.html
+          node -e "const fs=require('fs');const home=fs.readFileSync('pwr-music/index.html','utf8');const albums=fs.readFileSync('pwr-music/albums.html','utf8');const ids=[...home.matchAll(/data-recent-album=\"(\\d{12,14})\"/g)].map(x=>x[1]);if(ids.length!==7||new Set(ids).size!==7||ids.some(id=>!albums.includes('id=\"album-'+id+'\"')))process.exit(1)"
           test -s pwr-music/albums.html
           test -s pwr-music/verified-releases.csv
           test -s pwr-music/playlists.html
