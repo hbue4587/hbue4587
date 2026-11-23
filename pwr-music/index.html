@@ -58,24 +58,28 @@ These spreadsheet-safe, public-metadata-only files include 71 exact Spotify trac
 <section class="quick-search" aria-labelledby="find-heading">
 <h2 id="find-heading">Find released music / Busca música publicada</h2>
 <p>Search released titles, UPCs and verified song ISRCs. / Busca títulos publicados, UPC e ISRC verificados.</p>
-<form id="quick-find" action="./label.html" method="get" role="search">
+<form id="quick-find" action="./find.html" method="get" role="search">
 <label for="music-query">Song, album, UPC or ISRC / Canción, álbum, UPC o ISRC</label>
 <input id="music-query" name="q" type="search" required maxlength="120" autocomplete="off" placeholder="e.g. BACHATA PEGAJOSA or SE6132686828">
-<div class="search-buttons"><button type="submit" data-preview-page="label.html">Search releases / Buscar lanzamientos</button><button type="submit" data-preview-page="henry-miguel.html" formaction="./henry-miguel.html">Search songs / Buscar canciones</button></div>
+<div class="search-buttons"><button type="submit" data-preview-page="find.html">Search all 297 / Buscar todo (297)</button><button type="submit" data-preview-page="label.html" formaction="./label.html">Search releases / Buscar lanzamientos</button><button type="submit" data-preview-page="henry-miguel.html" formaction="./henry-miguel.html">Search songs / Buscar canciones</button></div>
 </form>
 <p class="search-footnote">Owner-confirmed released metadata only; no private archive search. / Solo metadatos publicados, sin archivos privados.</p>
 </section>
 
 <section class="listen-now" aria-labelledby="listen-heading">
 <h2 id="listen-heading">Listen to released music / Escucha música publicada</h2>
-<p class="details">Three distributor/ISRC-matched tracks with official Spotify links. In-page playback is provided by Spotify, not hosted audio. / Tres canciones cotejadas por ISRC; el reproductor es de Spotify.</p>
+<p class="details">Seven separately verified ISRC Spotify links: one from each of six matched album tracklists, plus one independent single. Playback is provided by Spotify; no master audio is hosted here. / Siete enlaces a grabaciones cotejadas por ISRC, con reproducción oficial de Spotify.</p>
 <div class="listen-grid">
-<div class="listen-tile"><h3>BACHATA PEGAJOSA</h3><p>Bachata / Salsa y Tropical · BACHATA PEGAJOSA</p><p><code>ISRC SE6132686788</code></p><div class="listen-actions"><button type="button" aria-expanded="false" aria-controls="spotify-listener" data-play-spotify="3lldt2XbS8JSn7lJoifLEs" data-song="BACHATA PEGAJOSA">Play here / Reproducir aquí</button><a href="https://open.spotify.com/track/3lldt2XbS8JSn7lJoifLEs" target="_blank" rel="noopener noreferrer">Spotify <span aria-hidden="true">↗</span></a></div></div>
-<div class="listen-tile"><h3>CUMBIA CON FLOW</h3><p>Cumbia / Salsa y Tropical · CUMBIA CON FLOW</p><p><code>ISRC SE6132686742</code></p><div class="listen-actions"><button type="button" aria-expanded="false" aria-controls="spotify-listener" data-play-spotify="2Aw0QyBphFmHBBBu4o76gF" data-song="CUMBIA CON FLOW">Play here / Reproducir aquí</button><a href="https://open.spotify.com/track/2Aw0QyBphFmHBBBu4o76gF" target="_blank" rel="noopener noreferrer">Spotify <span aria-hidden="true">↗</span></a></div></div>
-<div class="listen-tile"><h3>DESPACIO Y CON AMOR</h3><p>Reggaetón / Hip-Hop · VIBRA CONTIGO</p><p><code>ISRC SE6132640498</code></p><div class="listen-actions"><button type="button" aria-expanded="false" aria-controls="spotify-listener" data-play-spotify="3uKQe6AidQiLyQiwrFtE4t" data-song="DESPACIO Y CON AMOR">Play here / Reproducir aquí</button><a href="https://open.spotify.com/track/3uKQe6AidQiLyQiwrFtE4t" target="_blank" rel="noopener noreferrer">Spotify <span aria-hidden="true">↗</span></a></div></div>
+<div class="listen-tile" data-first-listen-isrc="SE6132686788"><h3>BACHATA PEGAJOSA</h3><p>BACHATA PEGAJOSA · Official / Oficial</p><p><code>ISRC SE6132686788</code></p><div class="listen-actions"><button type="button" aria-expanded="false" aria-controls="spotify-listener" data-play-spotify="3lldt2XbS8JSn7lJoifLEs" data-song="BACHATA PEGAJOSA">Play here / Reproducir aquí</button><a href="https://open.spotify.com/track/3lldt2XbS8JSn7lJoifLEs" target="_blank" rel="noopener noreferrer">Spotify <span aria-hidden="true">↗</span></a></div></div>
+<div class="listen-tile" data-first-listen-isrc="SE6132686775"><h3>COPA ROTA</h3><p>COPA ROTA · Official / Oficial</p><p><code>ISRC SE6132686775</code></p><div class="listen-actions"><button type="button" aria-expanded="false" aria-controls="spotify-listener" data-play-spotify="5QlzopUghu5DET26Q2rngQ" data-song="COPA ROTA">Play here / Reproducir aquí</button><a href="https://open.spotify.com/track/5QlzopUghu5DET26Q2rngQ" target="_blank" rel="noopener noreferrer">Spotify <span aria-hidden="true">↗</span></a></div></div>
+<div class="listen-tile" data-first-listen-isrc="SE6132686742"><h3>CUMBIA CON FLOW</h3><p>CUMBIA CON FLOW · Official / Oficial</p><p><code>ISRC SE6132686742</code></p><div class="listen-actions"><button type="button" aria-expanded="false" aria-controls="spotify-listener" data-play-spotify="2Aw0QyBphFmHBBBu4o76gF" data-song="CUMBIA CON FLOW">Play here / Reproducir aquí</button><a href="https://open.spotify.com/track/2Aw0QyBphFmHBBBu4o76gF" target="_blank" rel="noopener noreferrer">Spotify <span aria-hidden="true">↗</span></a></div></div>
+<div class="listen-tile" data-first-listen-isrc="SE8H72645784"><h3>VOLVAMOS A EMPEZAR</h3><p>DIEZ MANERAS DE AMAR · Official / Oficial</p><p><code>ISRC SE8H72645784</code></p><div class="listen-actions"><button type="button" aria-expanded="false" aria-controls="spotify-listener" data-play-spotify="4arrddWCcRgFEYnbu3Oxr2" data-song="VOLVAMOS A EMPEZAR">Play here / Reproducir aquí</button><a href="https://open.spotify.com/track/4arrddWCcRgFEYnbu3Oxr2" target="_blank" rel="noopener noreferrer">Spotify <span aria-hidden="true">↗</span></a></div></div>
+<div class="listen-tile" data-first-listen-isrc="SE6132686823"><h3>PARA SIEMPRE CONTIGO</h3><p>PARA SIEMPRE CONTIGO · Official / Oficial</p><p><code>ISRC SE6132686823</code></p><div class="listen-actions"><button type="button" aria-expanded="false" aria-controls="spotify-listener" data-play-spotify="3bjDiJ2SSrDSpD1LrC7hMJ" data-song="PARA SIEMPRE CONTIGO">Play here / Reproducir aquí</button><a href="https://open.spotify.com/track/3bjDiJ2SSrDSpD1LrC7hMJ" target="_blank" rel="noopener noreferrer">Spotify <span aria-hidden="true">↗</span></a></div></div>
+<div class="listen-tile" data-first-listen-isrc="SE6132640494"><h3>VIBRA CONTIGO</h3><p>VIBRA CONTIGO · Official / Oficial</p><p><code>ISRC SE6132640494</code></p><div class="listen-actions"><button type="button" aria-expanded="false" aria-controls="spotify-listener" data-play-spotify="39gdTT1PezYGOQiA7rAvQn" data-song="VIBRA CONTIGO">Play here / Reproducir aquí</button><a href="https://open.spotify.com/track/39gdTT1PezYGOQiA7rAvQn" target="_blank" rel="noopener noreferrer">Spotify <span aria-hidden="true">↗</span></a></div></div>
+<div class="listen-tile" data-first-listen-isrc="SE6132618973"><h3>PRENDE LA FIESTA</h3><p>Separate verified single / Sencillo cotejado · Official / Oficial</p><p><code>ISRC SE6132618973</code></p><div class="listen-actions"><button type="button" aria-expanded="false" aria-controls="spotify-listener" data-play-spotify="5FlRyayyUk7RdrJg9GGXsT" data-song="PRENDE LA FIESTA">Play here / Reproducir aquí</button><a href="https://open.spotify.com/track/5FlRyayyUk7RdrJg9GGXsT" target="_blank" rel="noopener noreferrer">Spotify <span aria-hidden="true">↗</span></a></div></div>
 </div>
 <div id="spotify-listener" role="region" aria-label="Spotify listening player / Reproductor de Spotify" hidden></div>
-<p class="search-footnote">Spotify availability and playback limitations vary by country and account. / La disponibilidad y reproducción dependen del país y la cuenta.</p>
+<p class="search-footnote"><strong>Reggae / Reggae:</strong> <a href="https://music.amazon.com/albums/B0HJFBDZ8Z" target="_blank" rel="noopener noreferrer">TRES VOCES, UNA RAÍZ — listen to the released album on Amazon Music / Escuchar el álbum en Amazon Music</a>. Album-level match only; individual Amazon track IDs are not reconciled. / Solo enlace al álbum; identificadores individuales pendientes.</p><p class="search-footnote">Spotify availability and playback limitations vary by country and account. / La disponibilidad y reproducción dependen del país y la cuenta.</p>
 </section>
 <div class="grid">
 <article><h2>PWR Music</h2><p>Label and released-music catalog. Albums, songs, verified tracklists, genre discovery and official listening links.</p><p lang="es">Sello y catálogo publicado: álbumes, canciones, géneros y enlaces de escucha.</p><a href="./label.html" data-preview-page="label.html">Explore PWR Music / Explorar</a></article>
@@ -105,6 +109,12 @@ These spreadsheet-safe, public-metadata-only files include 71 exact Spotify trac
   }
   // Keep the GitHub source URL intact inside the third-party renderer.
   function quickSearchUrl(file, query) {
+    if (file === 'find.html') {
+      const params = new URLSearchParams({ q: query });
+      return location.hostname === 'htmlpreview.github.io'
+        ? previewRoot + 'find.html#' + params.toString()
+        : './find.html#' + params.toString();
+    }
     const page = file === 'henry-miguel.html' ? 'henry-miguel.html' : 'label.html';
     const view = page === 'henry-miguel.html' ? 'songs' : 'releases';
     const params = new URLSearchParams({ view, q: query });
