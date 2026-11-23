@@ -10,6 +10,13 @@ assert.match(hub, /noindex,nofollow,noarchive/);
 assert.match(finder, /noindex,nofollow,noarchive/);
 assert.match(hub, /Search all 297 \/ Buscar todo \(297\)/);
 assert.match(hub, /https:\/\/music\.amazon\.com\/albums\/B0HJFBDZ8Z/);
+assert.match(hub, /id="existing-music-title"/);
+for (const safeLegacyUrl of ['https://pwrmusic.net/shop/','https://hmiguel.com/genre/']) {
+  assert.ok(hub.includes('href="'+safeLegacyUrl+'" target="_blank" rel="noopener noreferrer"'),
+    'Current live WordPress links must remain directly clickable without JavaScript');
+}
+assert.match(hub, /Purchases and downloads remain on the existing websites/);
+
 assert.doesNotMatch(hub, /drive\.google\.com|artist\.amuse\.io|raw_master|_master\.wav|<audio[\s>]/i);
 
 const payload = finder.match(/<script type="application\/json" id="public-catalog">([^<]+)<\/script>/)?.[1];
