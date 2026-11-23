@@ -19,6 +19,13 @@ label{display:block;font-weight:700}input,select{display:block;width:100%;min-he
 .pending{font-size:.83rem;color:#d4bd91}.player{margin-top:10px}.player[hidden]{display:none}.player iframe{width:100%;height:152px;border:0;border-radius:10px}
 .note{margin:36px 0;padding:15px 19px;border-left:4px solid #f7d998;background:#ffffff09;color:#bdcede}
 @media(max-width:690px){.controls{grid-template-columns:1fr;position:static}.album-header{display:block}}
+</style><style>
+.album-links-export{margin:20px 0 6px;padding:16px;border:1px solid #6e87a4;background:#10283c;border-radius:12px}
+.album-links-export summary{cursor:pointer;font-weight:800;line-height:1.55}
+.album-links-export p{font-size:.88rem;color:#c6d8e9;line-height:1.6}
+.album-links-export textarea{display:block;width:100%;min-height:85px;margin:12px 0;background:#081521;color:#eff7ff;border:1px solid #7c91a8;border-radius:9px;padding:12px;font:inherit;font-size:.86rem;resize:vertical}
+.album-links-export button{background:#2b5075;color:#fff;border:1px solid #84a4c4;border-radius:8px;padding:10px 14px;font:inherit;cursor:pointer}
+.album-links-export button:focus-visible,.album-links-export textarea:focus-visible{outline:3px solid #ffdc8b;outline-offset:3px}
 </style></head><body><main>
 <nav aria-label="Preview navigation"><a href="./index.html" data-preview-page="index.html">← Launch hub / Inicio</a><a href="./label.html" data-preview-page="label.html">PWR Music catalog / Catálogo</a><a href="./henry-miguel.html" data-preview-page="henry-miguel.html">Henry Miguel</a><a href="./genres.html" data-preview-page="genres.html">Genres / Géneros</a></nav>
 <p class="eyebrow">PWR Music International · Published releases / Lanzamientos publicados</p>
@@ -51,5 +58,38 @@ const id=button.getAttribute("data-play");if(!/^[A-Za-z0-9]{22}$/.test(id))retur
 const wasActive=active?.button===button;closePlayer();if(wasActive)return;
 const mount=button.closest(".track").querySelector(".player");const iframe=document.createElement("iframe");iframe.title="Spotify player / Reproductor de Spotify";iframe.src="https://open.spotify.com/embed/track/"+id;iframe.loading="lazy";iframe.allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";iframe.referrerPolicy="strict-origin-when-cross-origin";mount.replaceChildren(iframe);mount.hidden=false;button.setAttribute("aria-expanded","true");active={button,mount};
 });
+})();
+</script><script>
+// Generated only from publicly rendered, ISRC-linked Spotify IDs; no
+// invented album playlist, private Drive URL, or automatic Spotify request.
+(() => {
+  const format=/^https:\/\/open\.spotify\.com\/track\/[A-Za-z0-9]{22}$/;
+  for(const album of document.querySelectorAll('section.album[data-album-upc]')){
+    const identified=[...album.querySelectorAll('article.track[data-isrc][data-spotify]')].filter(node=>
+      /^[A-Z0-9]{12}$/.test(node.dataset.isrc) && format.test(node.dataset.spotify));
+    if(!identified.length)continue;
+    const lines=identified.map(node=>{
+      const position=node.querySelector('.num')?.textContent?.trim()||'';
+      const title=node.querySelector('h3')?.textContent?.trim()||'';
+      return position+'. '+title+' — '+node.dataset.spotify;
+    }).join('\n');
+    const details=document.createElement('details');
+    details.className='album-links-export';
+    details.setAttribute('data-copy-album-links',String(identified.length));
+    const summary=document.createElement('summary');
+    summary.textContent='Copy '+identified.length+' verified Spotify song links / Copiar '+identified.length+' enlaces cotejados de Spotify';
+    const note=document.createElement('p');
+    note.textContent='Owner-matched ISRC recording links, in this album’s documented track order. Not an official Spotify playlist; live link availability not rechecked. / Enlaces por ISRC en orden de pistas; no es una lista oficial y la disponibilidad no se comprobó de nuevo.';
+    const input=document.createElement('textarea');
+    input.readOnly=true;input.rows=Math.min(12,Math.max(3,identified.length));
+    input.setAttribute('aria-label','Album listening links / Enlaces para escuchar el álbum');
+    input.value=lines;
+    const select=document.createElement('button');
+    select.type='button';
+    select.textContent='Select links to copy / Seleccionar enlaces';
+    select.addEventListener('click',()=>{input.focus();input.select();});
+    details.append(summary,note,input,select);
+    album.append(details);
+  }
 })();
 </script></body></html>
