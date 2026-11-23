@@ -31,6 +31,14 @@ jobs:
         run: |
           set -euo pipefail
           test -s pwr-music/index.html
+          # Front door must lead to real combined music search and seven exact
+          # owner-reconciled first listens, even without JavaScript.
+          grep -Fq 'Search all 297 / Buscar todo (297)' pwr-music/index.html
+          grep -Fq "previewRoot + 'find.html#'" pwr-music/index.html
+          test "$(grep -o 'data-first-listen-isrc="' pwr-music/index.html | wc -l)" -eq 7
+          test "$(grep -o 'data-play-spotify="' pwr-music/index.html | wc -l)" -eq 7
+          grep -Fq 'https://music.amazon.com/albums/B0HJFBDZ8Z' pwr-music/index.html
+          grep -Fq 'noindex,nofollow,noarchive' pwr-music/index.html
           test -s pwr-music/label.html
           test -s pwr-music/henry-miguel.html
           test -s pwr-music/preview.html
