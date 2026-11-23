@@ -146,6 +146,20 @@ jobs:
             echo "Unexpected Pages API status: $status" >&2
             exit 1
           fi
+      - name: Assemble separate noindex PWR Music and Henry Miguel preview bundles
+        run: node pwr-music/package-site-previews.mjs pwr-music .tmp/public-site-previews
+      - name: Upload PWR Music review-site package
+        uses: actions/upload-artifact@v4
+        with:
+          name: pwr-music-label-review-site
+          path: .tmp/public-site-previews/pwrmusic/
+          retention-days: 14
+      - name: Upload Henry Miguel review-site package
+        uses: actions/upload-artifact@v4
+        with:
+          name: henry-miguel-artist-review-site
+          path: .tmp/public-site-previews/hmiguel/
+          retention-days: 14
       - name: Upload verified standalone site for review
         uses: actions/upload-artifact@v4
         with:
