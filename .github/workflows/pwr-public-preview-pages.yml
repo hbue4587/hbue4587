@@ -31,6 +31,14 @@ jobs:
         run: |
           set -euo pipefail
           test -s pwr-music/index.html
+          test -s pwr-music/LISTEN-TO-HENRY-MIGUEL.md
+          grep -Fq 'LISTEN-TO-HENRY-MIGUEL.md' pwr-music/index.html
+          test "$(grep -o 'https://open.spotify.com/track/' pwr-music/LISTEN-TO-HENRY-MIGUEL.md | wc -l | tr -d ' ')" -eq 71
+          test "$(grep -c '^## ' pwr-music/LISTEN-TO-HENRY-MIGUEL.md)" -eq 8
+          if grep -Ein 'https://(drive.google.com|docs.google.com)|artist.amuse.io|[.]mp3|[.]wav|raw_master|Dad Handoff' pwr-music/LISTEN-TO-HENRY-MIGUEL.md; then
+            echo 'Listening guide includes private audio or unreleased references'
+            exit 1
+          fi
           node pwr-music/verify-release-preview.mjs
           # Front door must lead to real combined music search and seven exact
           # owner-reconciled first listens, even without JavaScript.
