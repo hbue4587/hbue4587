@@ -31,7 +31,7 @@ jobs:
         run: |
           set -euo pipefail
           test -s pwr-music/index.html
-          test -s pwr-music/LISTEN-TO-HENRY-MIGUEL.md
+          test -s pwr-music/BROWSE-203-RELEASES.md\n          test "$(grep -c '^- \\*\\*' pwr-music/BROWSE-203-RELEASES.md)" -eq 203\n          test "$(grep -c 'Verified album tracklist / Pistas cotejadas' pwr-music/BROWSE-203-RELEASES.md)" -eq 7\n          test "$(grep -c 'Tracklist pending / Pistas por cotejar' pwr-music/BROWSE-203-RELEASES.md)" -eq 196\n          grep -Fq 'BROWSE-203-RELEASES.md' pwr-music/index.html\n          test -s pwr-music/LISTEN-TO-HENRY-MIGUEL.md
           grep -Fq 'LISTEN-TO-HENRY-MIGUEL.md' pwr-music/index.html
           test "$(grep -o 'https://open.spotify.com/track/' pwr-music/LISTEN-TO-HENRY-MIGUEL.md | wc -l | tr -d ' ')" -eq 71
           test "$(grep -c '^## ' pwr-music/LISTEN-TO-HENRY-MIGUEL.md)" -eq 8
