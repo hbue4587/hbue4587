@@ -46,6 +46,7 @@ footer{font-size:.9rem;color:#c6d5e2}footer a{color:#bce5ff}
 #spotify-listener p{margin:0 0 10px;color:#c8d7e3}
 #spotify-listener[hidden]{display:none}
 .legacy-links{margin:28px 0;padding:22px;border:1px solid #91a3b75e;border-radius:18px;background:#123048}.legacy-links h2{margin:0 0 10px}.legacy-links p{color:#d4e2ee}.legacy-actions{display:flex;flex-wrap:wrap;gap:12px}.legacy-actions a{min-height:48px;padding:12px 16px;border-radius:11px;background:#f9d685;color:#102333;font-weight:800;text-decoration:none;display:inline-flex;align-items:center}.legacy-actions a:focus-visible{outline:3px solid white;outline-offset:3px}
+.recent-uploads{margin:26px 0;padding:clamp(18px,3vw,28px);background:#142a42;border:1px solid #7593aa;border-radius:18px}.recent-uploads h2{margin:0 0 10px}.recent-uploads>p{color:#c8d7e3}.recent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px}.recent-grid article{padding:17px;background:#1d3851;border:1px solid #738fa4;border-radius:12px}.recent-grid h3{font-size:1.12rem;margin:0 0 10px}.recent-grid p{font-size:.88rem;color:#d0e1ec}.recent-grid .recent-date{color:#f9d685}.recent-grid a{display:inline-flex;align-items:center;min-height:44px;color:#102333;background:#f9d685;padding:10px 12px;border-radius:8px;text-decoration:none;font-weight:750}.recent-grid a:focus-visible{outline:3px solid white;outline-offset:3px}
 </style></head><body><main>
 <p class="eyebrow">PWR Music International · Public preview / Vista pública</p>
 <h1>Music without borders.<br><span lang="es">Música sin fronteras.</span></h1>
@@ -65,6 +66,20 @@ These spreadsheet-safe, public-metadata-only files include 71 exact Spotify trac
 <div class="search-buttons"><button type="submit" data-preview-page="find.html">Search all 297 / Buscar todo (297)</button><button type="submit" data-preview-page="label.html" formaction="./label.html">Search releases / Buscar lanzamientos</button><button type="submit" data-preview-page="henry-miguel.html" formaction="./henry-miguel.html">Search songs / Buscar canciones</button></div>
 </form>
 <p class="search-footnote">Owner-confirmed released metadata only; no private archive search. / Solo metadatos publicados, sin archivos privados.</p>
+</section>
+
+<section class="recent-uploads" aria-labelledby="recent-uploads-heading">
+<h2 id="recent-uploads-heading">Recently uploaded albums / Álbumes cargados recientemente</h2>
+<p>Seven complete, ISRC/UPC-matched albums, ordered by their verified <strong>Amuse studio upload dates</strong> — not their public streaming release dates. / Siete álbumes cotejados, ordenados por la fecha de carga en Amuse, no por fecha de estreno.</p>
+<div class="recent-grid">
+<article data-recent-amuse-upc="7333596308926"><h3>DIEZ MANERAS DE AMAR</h3><p>Salsa y Tropical</p><p class="recent-date">Amuse upload / Carga en Amuse: <time datetime="2026-10-14">2026-10-14</time></p><a href="./albums.html#album-7333596308926" data-recent-album="7333596308926">View verified tracklist / Ver canciones cotejadas</a></article>
+<article data-recent-amuse-upc="7333595600526"><h3>TRES VOCES, UNA RAÍZ</h3><p>Reggae</p><p class="recent-date">Amuse upload / Carga en Amuse: <time datetime="2026-09-10">2026-09-10</time></p><a href="./albums.html#album-7333595600526" data-recent-album="7333595600526">View verified tracklist / Ver canciones cotejadas</a></article>
+<article data-recent-amuse-upc="7333591901337"><h3>BACHATA PEGAJOSA</h3><p>Salsa y Tropical</p><p class="recent-date">Amuse upload / Carga en Amuse: <time datetime="2026-08-06">2026-08-06</time></p><a href="./albums.html#album-7333591901337" data-recent-album="7333591901337">View verified tracklist / Ver canciones cotejadas</a></article>
+<article data-recent-amuse-upc="7333591901313"><h3>COPA ROTA</h3><p>Salsa y Tropical</p><p class="recent-date">Amuse upload / Carga en Amuse: <time datetime="2026-08-06">2026-08-06</time></p><a href="./albums.html#album-7333591901313" data-recent-album="7333591901313">View verified tracklist / Ver canciones cotejadas</a></article>
+<article data-recent-amuse-upc="7333591901122"><h3>CUMBIA CON FLOW</h3><p>Salsa y Tropical</p><p class="recent-date">Amuse upload / Carga en Amuse: <time datetime="2026-08-06">2026-08-06</time></p><a href="./albums.html#album-7333591901122" data-recent-album="7333591901122">View verified tracklist / Ver canciones cotejadas</a></article>
+<article data-recent-amuse-upc="7333591901467"><h3>PARA SIEMPRE CONTIGO</h3><p>Salsa y Tropical</p><p class="recent-date">Amuse upload / Carga en Amuse: <time datetime="2026-08-06">2026-08-06</time></p><a href="./albums.html#album-7333591901467" data-recent-album="7333591901467">View verified tracklist / Ver canciones cotejadas</a></article>
+<article data-recent-amuse-upc="7333591432527"><h3>VIBRA CONTIGO</h3><p>Reggaeton y Hip-Hop</p><p class="recent-date">Amuse upload / Carga en Amuse: <time datetime="2026-07-24">2026-07-24</time></p><a href="./albums.html#album-7333591432527" data-recent-album="7333591432527">View verified tracklist / Ver canciones cotejadas</a></article>
+</div><p class="recent-footnote">These seven album tracklists contain 80 identified songs; 70 have exact official Spotify track links. The other 196 Amuse releases remain metadata-only. / Los otros 196 lanzamientos aún no tienen listas de pistas cotejadas.</p>
 </section>
 
 <section class="legacy-links" aria-labelledby="existing-music-title">
@@ -116,6 +131,12 @@ These spreadsheet-safe, public-metadata-only files include 71 exact Spotify trac
   for (const link of document.querySelectorAll('a[data-preview-page]')) {
     const target = link.getAttribute('data-preview-page');
     if (allowed.has(target) && location.hostname === 'htmlpreview.github.io') link.href = previewRoot + target;
+  }
+  // Preserve album anchors when the public HTML is rendered through htmlpreview.github.io.
+  for (const link of document.querySelectorAll('a[data-recent-album]')) {
+    const upc = link.getAttribute('data-recent-album') || '';
+    if (!/^\d{12,14}$/.test(upc)) continue;
+    if (location.hostname === 'htmlpreview.github.io') link.href = previewRoot + 'albums.html#album-' + upc;
   }
   // Keep the GitHub source URL intact inside the third-party renderer.
   function quickSearchUrl(file, query) {
