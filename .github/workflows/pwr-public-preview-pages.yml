@@ -31,6 +31,7 @@ jobs:
         run: |
           set -euo pipefail
           test -s pwr-music/index.html
+          node pwr-music/verify-release-preview.mjs
           # Front door must lead to real combined music search and seven exact
           # owner-reconciled first listens, even without JavaScript.
           grep -Fq 'Search all 297 / Buscar todo (297)' pwr-music/index.html
